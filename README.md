@@ -18,7 +18,7 @@ A simple ecommerce application built with Vue.js. This is my first project using
 ## Installation
 ```sh
 # Clone the repository
-git clone https://github.com/yourusername/vue-ecommerce.git
+git clone https://github.com/fiskryeziu/vue-ecommerce.git
 cd vue-ecommerce
 
 # Install dependencies
