@@ -1,0 +1,251 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Vintage Leather Jacket",
+      "desc": "A stylish vintage leather jacket perfect for winter fashion.",
+      "price": 120,
+      "compareprice": 160,
+      "image": "https://via.placeholder.com/200x200?text=Leather+Jacket",
+      "category": "Clothing",
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "title": "Bluetooth Wireless Headphones",
+      "desc": "Noise-canceling over-ear Bluetooth headphones with long-lasting battery life.",
+      "price": 80,
+      "compareprice": 120,
+      "image": "https://via.placeholder.com/200x200?text=Bluetooth+Headphones",
+      "category": "Electronics",
+      "rating": 4.7
+    },
+    {
+      "id": 3,
+      "title": "Smartphone 128GB",
+      "desc": "Latest model smartphone with 128GB storage and powerful camera.",
+      "price": 699,
+      "compareprice": 799,
+      "image": "https://via.placeholder.com/200x200?text=Smartphone",
+      "category": "Electronics",
+      "rating": 4.6
+    },
+    {
+      "id": 4,
+      "title": "Leather Wallet",
+      "desc": "High-quality leather wallet with multiple card slots.",
+      "price": 45,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Leather+Wallet",
+      "category": "Accessories",
+      "rating": 4.2
+    },
+    {
+      "id": 5,
+      "title": "Stylish Running Shoes",
+      "desc": "Comfortable and stylish running shoes for daily workouts.",
+      "price": 90,
+      "compareprice": 110,
+      "image": "https://via.placeholder.com/200x200?text=Running+Shoes",
+      "category": "Footwear",
+      "rating": 4.8
+    },
+    {
+      "id": 6,
+      "title": "Classic Wristwatch",
+      "desc": "Elegant wristwatch with a stainless steel band, perfect for formal occasions.",
+      "price": 150,
+      "compareprice": 200,
+      "image": "https://via.placeholder.com/200x200?text=Wristwatch",
+      "category": "Accessories",
+      "rating": 4.3
+    },
+    {
+      "id": 7,
+      "title": "Portable Power Bank",
+      "desc": "Compact power bank with 10,000mAh capacity for charging on the go.",
+      "price": 30,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Power+Bank",
+      "category": "Electronics",
+      "rating": 4.4
+    },
+    {
+      "id": 8,
+      "title": "Wooden Coffee Table",
+      "desc": "Stylish wooden coffee table with a modern design for your living room.",
+      "price": 250,
+      "compareprice": 300,
+      "image": "https://via.placeholder.com/200x200?text=Coffee+Table",
+      "category": "Furniture",
+      "rating": 4.1
+    },
+    {
+      "id": 9,
+      "title": "Smart Fitness Tracker",
+      "desc": "Track your health metrics and daily activities with this advanced fitness tracker.",
+      "price": 50,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Fitness+Tracker",
+      "category": "Electronics",
+      "rating": 4.6
+    },
+    {
+      "id": 10,
+      "title": "Luxury Bed Sheets Set",
+      "desc": "Soft, breathable, and high-quality cotton bed sheets to enhance your sleep.",
+      "price": 85,
+      "compareprice": 100,
+      "image": "https://via.placeholder.com/200x200?text=Bed+Sheets",
+      "category": "Home",
+      "rating": 4.7
+    },
+    {
+      "id": 11,
+      "title": "Gaming Laptop 16GB RAM",
+      "desc": "High-performance gaming laptop with 16GB RAM and 1TB SSD storage.",
+      "price": 1500,
+      "compareprice": 1800,
+      "image": "https://via.placeholder.com/200x200?text=Gaming+Laptop",
+      "category": "Electronics",
+      "rating": 4.9
+    },
+    {
+      "id": 12,
+      "title": "Bluetooth Smart Speaker",
+      "desc": "Portable Bluetooth speaker with immersive sound and waterproof design.",
+      "price": 45,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Smart+Speaker",
+      "category": "Electronics",
+      "rating": 4.4
+    },
+    {
+      "id": 13,
+      "title": "Air Purifier with HEPA Filter",
+      "desc": "Advanced air purifier with a HEPA filter for cleaner and fresher air.",
+      "price": 120,
+      "compareprice": 150,
+      "image": "https://via.placeholder.com/200x200?text=Air+Purifier",
+      "category": "Home",
+      "rating": 4.6
+    },
+    {
+      "id": 14,
+      "title": "Leather Backpack",
+      "desc": "Stylish and durable leather backpack perfect for daily use.",
+      "price": 110,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Leather+Backpack",
+      "category": "Accessories",
+      "rating": 4.3
+    },
+    {
+      "id": 15,
+      "title": "Compact Digital Camera",
+      "desc": "High-resolution digital camera with a compact design, perfect for photography on the go.",
+      "price": 200,
+      "compareprice": 250,
+      "image": "https://via.placeholder.com/200x200?text=Digital+Camera",
+      "category": "Electronics",
+      "rating": 4.5
+    },
+    {
+      "id": 16,
+      "title": "Portable Mini Fridge",
+      "desc": "Compact mini fridge for storing snacks, drinks, or skincare products.",
+      "price": 90,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Mini+Fridge",
+      "category": "Home",
+      "rating": 4.2
+    },
+    {
+      "id": 17,
+      "title": "Kitchen Knife Set",
+      "desc": "Premium kitchen knife set with ergonomic handles for easy use.",
+      "price": 60,
+      "compareprice": 80,
+      "image": "https://via.placeholder.com/200x200?text=Knife+Set",
+      "category": "Kitchen",
+      "rating": 4.8
+    },
+    {
+      "id": 18,
+      "title": "Luxury Perfume",
+      "desc": "Exquisite fragrance with long-lasting scent, perfect for special occasions.",
+      "price": 90,
+      "compareprice": 120,
+      "image": "https://via.placeholder.com/200x200?text=Perfume",
+      "category": "Beauty",
+      "rating": 4.7
+    },
+    {
+      "id": 19,
+      "title": "Cotton T-Shirt",
+      "desc": "Soft and breathable cotton t-shirt, ideal for everyday wear.",
+      "price": 25,
+      "compareprice": null,
+      "image": "https://via.placeholder.com/200x200?text=Cotton+T-Shirt",
+      "category": "Clothing",
+      "rating": 4.3
+    },
+    {
+      "id": 20,
+      "title": "Electric Toothbrush",
+      "desc": "Advanced electric toothbrush with multiple cleaning modes and a long-lasting battery.",
+      "price": 60,
+      "compareprice": 80,
+      "image": "https://via.placeholder.com/200x200?text=Electric+Toothbrush",
+      "category": "Health & Beauty",
+      "rating": 4.5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "User One",
+      "email": "user1@user.com",
+      "role": "admin",
+      "password": "hashed_password_123",
+      "address": {
+        "street": "123 Maple St.",
+        "city": "Somewhere",
+        "state": "CA",
+        "zip": "90001"
+      },
+      "phone": "+1 555-1234",
+      "created_at": "2025-02-20T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "User Two",
+      "email": "user2@user.com",
+      "role": "client",
+      "password": "hashed_password_456",
+      "address": {
+        "street": "456 Oak Ave.",
+        "city": "Elsewhere",
+        "state": "NY",
+        "zip": "10001"
+      },
+      "phone": "+1 555-5678",
+      "created_at": "2025-02-18T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "User Four",
+      "email": "user3@user.com",
+      "role": "client",
+      "password": "hashed_password_admin_789",
+      "address": {
+        "street": "789 Admin Rd.",
+        "city": "Admin City",
+        "state": "TX",
+        "zip": "75001"
+      },
+      "phone": "+1 555-9876",
+      "created_at": "2025-02-15T08:00:00Z"
+    }
+  ]
+}
