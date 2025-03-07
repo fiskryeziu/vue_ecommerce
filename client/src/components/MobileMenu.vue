@@ -5,43 +5,81 @@
       <X @click="$emit('toggle')"></X>
     </div>
     <div>
-      <div class="tab-wrapper">
+      <div class="tab-wrapper text-medium">
         <button
           @click="selectTab('menu')"
           class="uppercase text-sm"
-          :class="{ active: menu === 'menu' }"
+          :class="{ active: tab === 'menu' }"
         >
           Menu
         </button>
         <button
           @click="selectTab('categories')"
           class="uppercase text-sm"
-          :class="{ active: menu === 'categories' }"
+          :class="{ active: tab === 'categories' }"
         >
           Categories
         </button>
       </div>
       <section>
-        <h1 v-if="menu === 'menu'">Menu is selected</h1>
-        <h1 v-if="menu === 'categories'">Category is selected</h1>
+        <div class="col text-medium" v-if="tab === 'menu'">
+          <RouterLink
+            :to="link.href"
+            v-for="(link, index) in menus"
+            :key="index"
+            @click="$emit('toggle')"
+          >
+            {{ link.name }}
+          </RouterLink>
+        </div>
+        <div class="col text-medium" v-if="tab === 'categories'">
+          <RouterLink
+            :to="link.href"
+            v-for="(link, index) in categories"
+            :key="index"
+            @click="$emit('toggle')"
+          >
+            {{ link.name }}
+          </RouterLink>
+        </div>
       </section>
-      <!-- tab for menu and category -->
     </div>
-    <div><!-- social icons  --></div>
+    <div class="social">
+      <Facebook :size="18" />
+      <Twitter :size="18" />
+      <Instagram :size="18" />
+    </div>
   </aside>
   <div class="overlay" v-if="open" @click="$emit('toggle')"></div>
 </template>
 
 <script setup lang="ts">
-import { X } from 'lucide-vue-next'
+// @ts-ignore
+import { Facebook, Instagram, Twitter, X } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 defineProps({ open: Boolean })
 defineEmits(['toggle'])
 
-const menu = ref('menu')
+const tab = ref('menu')
+const menus = ref([
+  { name: 'Home', href: '/' },
+  { name: 'Shop', href: '/shop' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+])
+const categories = ref([
+  { name: 'New Products', href: '/' },
+  { name: 'Today on Sale', href: '/shop' },
+  { name: 'Special Offer!', href: '/special-offer' },
+  { name: 'Necklace', href: '/necklace' },
+  { name: 'Rings', href: '/rings' },
+  { name: 'Bracelets', href: '/bracelets' },
+  { name: 'Earrings', href: '/earrings' },
+  { name: 'Watches', href: '/watches' },
+])
 const selectTab = (selected: string) => {
-  menu.value = selected
+  tab.value = selected
 }
 </script>
 
@@ -111,6 +149,16 @@ button.active::before {
 }
 
 section {
+  margin: 1em;
+}
+
+section > div > a {
+  padding: 6px 6px;
+}
+
+.social {
+  display: flex;
+  gap: 1em;
   margin: 1em;
 }
 </style>

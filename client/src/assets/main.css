@@ -100,6 +100,9 @@ body {
 .text-bold {
   font-weight: var(--font-bold);
 }
+.text-medium {
+  font-weight: var(--font-medium);
+}
 .text-center {
   text-align: center;
 }
@@ -176,4 +179,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.gap {
+  gap: var(--spacing-3);
 }
