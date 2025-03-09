@@ -29,6 +29,8 @@ import { Heart, Home, Search, User } from 'lucide-vue-next'
   position: fixed;
   padding: 0.5em 3em;
   bottom: 0;
+  z-index: 1;
+  background-color: var(--background);
 }
 
 @media screen and (max-width: 1024px) {
