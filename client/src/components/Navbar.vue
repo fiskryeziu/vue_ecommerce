@@ -28,11 +28,11 @@
       </div>
     </div>
 
-    <div class="flex">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/shop">Shop</RouterLink>
-      <RouterLink to="/about">About Us</RouterLink>
-      <RouterLink to="/about">Contact</RouterLink>
+    <div class="nav-lower">
+      <RouterLink to="/" class="nav-lower__link">Home</RouterLink>
+      <RouterLink to="/shop" class="nav-lower__link">Shop</RouterLink>
+      <RouterLink to="/about" class="nav-lower__link">About Us</RouterLink>
+      <RouterLink to="/about" class="nav-lower__link">Contact</RouterLink>
     </div>
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
@@ -52,12 +52,9 @@ const toggleMenu = () => {
 </script>
 
 <style scoped>
-nav {
-  padding-inline: 1em;
-}
-
 .nav-upper {
   height: 85px;
+  padding-inline: 1em;
 }
 .wrapper {
   display: flex;
@@ -123,6 +120,36 @@ form {
   color: white;
 }
 
+.nav-lower {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  border-top: 1px solid var(--lightest);
+  padding: 1em;
+}
+
+.nav-lower__link {
+  position: relative;
+}
+
+.nav-lower__link:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: all 300ms ease;
+}
+
+.nav-lower__link:hover::before {
+  width: 100%;
+}
+
 @media screen and (max-width: 1024px) {
   .icon:not(:last-child) {
     display: none;
@@ -134,6 +161,10 @@ form {
     display: flex;
     flex-basis: 25%;
     justify-content: start;
+  }
+
+  .nav-lower {
+    display: none;
   }
 }
 </style>
