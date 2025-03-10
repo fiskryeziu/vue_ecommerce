@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Carousel from '@/components/Carousel.vue'
+</script>
 
 <template>
-  <h1>Hello App!</h1>
+  <Carousel />
 </template>

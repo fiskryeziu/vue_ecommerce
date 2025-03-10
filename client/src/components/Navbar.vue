@@ -12,7 +12,7 @@
             <Search strokeWidth="1.3" />
           </button>
         </form>
-        <h1 class="text-3xl uppercase text-light">Gold & Co</h1>
+        <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
           <div class="icon">
             <User />
@@ -163,8 +163,18 @@ form {
     justify-content: start;
   }
 
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
   .nav-lower {
     display: none;
+  }
+
+  @media screen and (max-width: 624px) {
+    h1 {
+      font-size: var(--text-2xl);
+    }
   }
 }
 </style>

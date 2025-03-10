@@ -92,7 +92,7 @@ const selectTab = (selected: string) => {
   height: 100vh;
   background-color: var(--background);
   transition: left 200ms ease-in-out;
-  z-index: 1;
+  z-index: 3;
 }
 .show {
   left: 0;
@@ -105,6 +105,7 @@ const selectTab = (selected: string) => {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2;
 }
 
 .mobile-nav__logo {
