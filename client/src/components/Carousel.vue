@@ -3,6 +3,9 @@
     :modules="modules"
     :slides-per-view="1"
     :pagination="{ clickable: true }"
+    effect="fade"
+    :autoplay="{ delay: 10000 }"
+    :loop="true"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
   >
@@ -22,12 +25,13 @@
 import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Swiper as SwiperClass } from 'swiper/types'
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules'
+import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
+import 'swiper/css/effect-fade'
 
 //TODO: add autoplay, arrows and indicator of carousels
 const items = ref([
@@ -64,7 +68,7 @@ const onSlideChange = () => {
   console.log('slide change')
 }
 
-const modules = [Navigation, Pagination, Scrollbar, A11y]
+const modules = [Navigation, Pagination, Scrollbar, A11y, EffectFade, Autoplay]
 </script>
 
 <style lang="css">

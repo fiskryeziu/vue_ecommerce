@@ -7,7 +7,7 @@ import BottomMenu from './components/BottomMenu.vue'
 <!--
 TODO:
 - [x] add colors, vars, layout & other things in css
-- [] swiper.js for carousels
+- [x] swiper.js for carousels
 - [] finish the frontend with dummy data first
 - [] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
