@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import type { Swiper as SwiperClass } from 'swiper/types'
 import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
@@ -30,6 +31,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/effect-fade'
 
+//TODO: add autoplay, arrows and indicator of carousels
 const items = ref([
   {
     id: 1,
