@@ -1,12 +1,12 @@
 <template>
-  <h1 class="title">Necklase</h1>
+  <h1 class="heading">{{ category }}</h1>
   <div class="wrapper">
     <div class="feature">
       <div class="image-wrapper">
-        <img src="/feature1.jpg" alt="feature" />
+        <img :src="featuredImage" alt="feature-image" />
       </div>
       <div class="content-wrapper">
-        <h3>New Earrings Arrival</h3>
+        <h3>{{ title }}</h3>
         <a href="">Shop Now</a>
       </div>
     </div>
@@ -31,10 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { ref } from 'vue'
 import CardProduct from './CardProduct.vue'
+import { data } from '@/data'
 
 export type Product = {
   id: number
@@ -55,70 +55,10 @@ defineProps<{
   products?: Product[]
 }>()
 
-const items = ref<Product[]>([
-  {
-    id: 1,
-    imgSrc: './categories/1.jpg',
-    category: 'necklaces',
-    href: '',
-    title: 'Birds of Paradise Pendant',
-    desc: 'A beautiful pendant inspired by the exotic Birds of Paradise.',
-    price: 199.99,
-    comparePrice: 249.99,
-    rating: 4.5,
-  },
-  {
-    id: 2,
-    imgSrc: './categories/2.jpg',
-    category: 'rings',
-    href: '',
-    title: 'Eternal Love Ring',
-    desc: 'A symbol of everlasting love, crafted with precision and care.',
-    price: 299.0,
-    rating: 4.8,
-  },
-  {
-    id: 3,
-    imgSrc: './categories/3.jpg',
-    category: 'bracelets',
-    href: '',
-    title: 'Ocean Breeze Bracelet',
-    desc: 'Capture the essence of the ocean with this elegant bracelet.',
-    price: 149.5,
-    comparePrice: 179.99,
-    rating: 4.2,
-  },
-  {
-    id: 4,
-    imgSrc: './categories/4.jpg',
-    category: 'earrings',
-    href: '',
-    title: 'Starlight Earrings',
-    desc: 'Shine like the stars with these delicate and sparkling earrings.',
-    price: 129.0,
-    rating: 4.6,
-  },
-  {
-    id: 5,
-    imgSrc: './categories/5.jpg',
-    category: 'charm & dangles',
-    href: '',
-    title: 'Lucky Clover Charm',
-    desc: 'Bring good fortune with this charming clover dangle.',
-    price: 49.99,
-    rating: 4.0,
-  },
-])
+const items = ref<Product[]>(data)
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-  margin-block: 2em;
-  font-size: clamp(1.625rem, 5vw, 2.5rem);
-  font-weight: var(--font-normal);
-}
-
 .wrapper {
   display: flex;
   gap: 1em;

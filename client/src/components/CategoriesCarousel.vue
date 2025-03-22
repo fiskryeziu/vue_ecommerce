@@ -127,7 +127,7 @@ img {
 
 h1 {
   text-align: center;
-  padding-block: 2em;
+  margin-block: 2em 0.5em;
   font-size: clamp(1.625rem, 5vw, 2.5rem);
   font-weight: var(--font-normal);
 }
