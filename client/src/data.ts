@@ -52,3 +52,30 @@ export const data = [
     rating: 4.0,
   },
 ]
+
+export const brands = [
+  {
+    id: 1,
+    imgSrc: './brands/brand1.png',
+  },
+  {
+    id: 2,
+    imgSrc: './brands/brand2.png',
+  },
+  {
+    id: 3,
+    imgSrc: './brands/brand3.png',
+  },
+  {
+    id: 4,
+    imgSrc: './brands/brand4.png',
+  },
+  {
+    id: 5,
+    imgSrc: './brands/brand5.png',
+  },
+  {
+    id: 6,
+    imgSrc: './brands/brand6.png',
+  },
+]
