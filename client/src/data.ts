@@ -79,3 +79,35 @@ export const brands = [
     imgSrc: './brands/brand6.png',
   },
 ]
+export const postsData = [
+  {
+    id: 1,
+    href: '',
+    imgSrc: './socials/social1.jpg',
+  },
+  {
+    id: 2,
+    href: '',
+    imgSrc: './socials/social2.jpg',
+  },
+  {
+    id: 3,
+    href: '',
+    imgSrc: './socials/social3.jpg',
+  },
+  {
+    id: 4,
+    href: '',
+    imgSrc: './socials/social4.jpg',
+  },
+  {
+    id: 5,
+    href: '',
+    imgSrc: './socials/social5.jpg',
+  },
+  {
+    id: 6,
+    href: '',
+    imgSrc: './socials/social6.jpg',
+  },
+]

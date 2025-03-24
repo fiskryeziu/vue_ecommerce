@@ -5,6 +5,7 @@ import FeaturedProducts from '../components/FeaturedProducts.vue'
 import ProductsCarousel from '@/components/ProductsCarousel.vue'
 import PromoBanner from '@/components/PromoBanner.vue'
 import Brands from '@/components/Brands.vue'
+import Socials from '@/components/Socials.vue'
 </script>
 
 <template>
@@ -28,4 +29,5 @@ import Brands from '@/components/Brands.vue'
     featuredImage="/feature1.jpg"
   />
   <Brands />
+  <Socials />
 </template>
