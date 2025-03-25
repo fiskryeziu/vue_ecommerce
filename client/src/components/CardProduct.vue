@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { Product } from './ProductsCarousel.vue'
+import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
 
 defineProps<{
   product: Product

@@ -45,7 +45,8 @@ const isHovering = ref<Record<number, boolean>>({})
 
 <style scoped>
 section {
-  padding-inline: 1em;
+  padding: 3em 1em 3em 1em;
+  background-color: #f6eceb;
 }
 
 .social__wrapper {

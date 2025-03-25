@@ -39,6 +39,9 @@ h2 {
   text-align: center;
   font-weight: var(--font-normal);
 }
+section {
+  padding-bottom: 3em;
+}
 .swiper-slide {
   display: flex;
   justify-content: center;
