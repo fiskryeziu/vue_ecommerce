@@ -18,9 +18,13 @@
       class="slider"
     >
       <swiper-slide v-for="post in posts" :key="post.id">
-        <div class="social__wrapper">
+        <div
+          class="social__wrapper"
+          @mouseenter="isHovering[post.id] = true"
+          @mouseleave="isHovering[post.id] = false"
+        >
           <img :src="post.imgSrc" alt="" />
-          <div class="social__icon">
+          <div :class="{ activeIcon: isHovering[post.id] }" class="social__icon">
             <Instagram />
           </div>
         </div>
@@ -36,6 +40,7 @@ import { postsData } from '@/data'
 import { Instagram } from 'lucide-vue-next'
 
 const posts = ref(postsData)
+const isHovering = ref<Record<number, boolean>>({})
 </script>
 
 <style scoped>
