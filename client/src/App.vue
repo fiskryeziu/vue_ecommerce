@@ -14,7 +14,7 @@ TODO:
 -->
 <template>
   <Navbar />
-  <main style="margin-bottom: 2000px">
+  <main>
     <RouterView />
   </main>
   <BottomMenu />
