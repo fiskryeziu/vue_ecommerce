@@ -1,7 +1,7 @@
 <template>
   <footer>
     <section>
-      <div>
+      <div class="footer__logo">
         <h1 class="uppercase text-light">Gold & Co</h1>
         <p class="subtext">Gold & Diamond</p>
       </div>
@@ -32,27 +32,29 @@
         <p class="subtext"><span>Email:</span>example@example.com</p>
       </nav>
 
-      <div>
+      <nav>
         <p class="footer__title">Follow Us</p>
         <div class="footer__socials">
           <Facebook />
           <Instagram />
           <Twitter />
         </div>
-      </div>
+      </nav>
+      <MobileFooter />
     </section>
   </footer>
 </template>
 
 <script setup lang="ts">
 import { Facebook, Instagram, Twitter } from 'lucide-vue-next'
+import MobileFooter from './MobileFooter.vue'
 </script>
 
 <style scoped>
 footer {
   display: flex;
   flex-direction: column;
-  padding-block: 2em;
+  padding-block: 5em;
 }
 
 section {
@@ -81,17 +83,34 @@ span {
 }
 
 h1 {
-  font-size: clamp(1.5em, 4vw, 2.3em);
+  font-size: clamp(1.9em, 4vw, 2.3em);
   line-height: 1;
   padding-bottom: 0.4em;
 }
 
-section:first-child {
+section {
   padding-left: 1em;
 }
 
 .footer__socials {
   display: flex;
   gap: 2em;
+}
+
+@media screen and (max-width: 1024px) {
+  section {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2em;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  nav {
+    display: none;
+  }
+  section {
+    grid-template-columns: 1fr;
+    row-gap: 2em;
+  }
 }
 </style>
