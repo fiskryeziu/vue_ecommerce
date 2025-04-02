@@ -69,7 +69,7 @@ const accordionItems = [
   {
     title: 'Store Details',
     type: 'text',
-    text: '<span>Address:</span> 502 Street 2,<br />Prizren, Kosova<br /><span>Email:</span> example@example.com',
+    text: '<span>Address:</span> 502 Street 2,Prizren, Kosova<br /><span>Email:</span> example@example.com',
   },
   {
     title: 'Follow Us',
@@ -129,8 +129,14 @@ button {
 
 .subtext {
   color: var(--secondary);
+  transition: color 200ms ease;
 }
-span {
+
+.subtext:hover {
+  color: var(--primary);
+}
+
+::v-deep(.subtext span) {
   color: var(--primary);
 }
 

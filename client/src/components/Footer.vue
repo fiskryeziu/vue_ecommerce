@@ -42,6 +42,7 @@
       </nav>
       <MobileFooter />
     </section>
+    <p class="copyright">Gold & Co &copy 2025 developed by fiskryeziu.</p>
   </footer>
 </template>
 
@@ -54,7 +55,7 @@ import MobileFooter from './MobileFooter.vue'
 footer {
   display: flex;
   flex-direction: column;
-  padding-block: 5em;
+  padding: 5em 0 2em 0;
 }
 
 section {
@@ -95,6 +96,12 @@ section {
 .footer__socials {
   display: flex;
   gap: 2em;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 5em;
+  color: var(--secondary);
 }
 
 @media screen and (max-width: 1024px) {

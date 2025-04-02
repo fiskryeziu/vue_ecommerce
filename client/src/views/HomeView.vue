@@ -7,7 +7,6 @@ import PromoBanner from '@/components/PromoBanner.vue'
 import Brands from '@/components/Brands.vue'
 import Socials from '@/components/Socials.vue'
 import Benefits from '@/components/Benefits.vue'
-import Footer from '@/components/Footer.vue'
 </script>
 
 <template>
@@ -33,5 +32,4 @@ import Footer from '@/components/Footer.vue'
   <Brands />
   <Socials />
   <Benefits />
-  <Footer />
 </template>
