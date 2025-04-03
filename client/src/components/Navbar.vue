@@ -32,7 +32,7 @@
       <RouterLink to="/" class="nav-lower__link">Home</RouterLink>
       <RouterLink to="/shop" class="nav-lower__link">Shop</RouterLink>
       <RouterLink to="/about" class="nav-lower__link">About Us</RouterLink>
-      <RouterLink to="/about" class="nav-lower__link">Contact</RouterLink>
+      <RouterLink to="/contact" class="nav-lower__link">Contact</RouterLink>
     </div>
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />

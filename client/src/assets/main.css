@@ -69,6 +69,15 @@
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 }
+::-moz-selection {
+  color: var(--background);
+  background: var(--primary);
+}
+
+::selection {
+  color: var(--background);
+  background: var(--primary);
+}
 
 body {
   color: var(--text-dark);
