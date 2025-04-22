@@ -68,7 +68,7 @@ onMounted(() => {
       </div>
       <div>
         <AlarmClock :size="30" :strokeWidth="1" />
-        <h3>BUSNESS HOURS</h3>
+        <h3>BUSINESS HOURS</h3>
         <p>
           Monday - Sunday: <br />
           09:00 - 20:00

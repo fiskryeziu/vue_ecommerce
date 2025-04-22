@@ -4,6 +4,10 @@
       <Home style="color: var(--secondary)" />
       <p class="text-xs uppercase">Home</p>
     </RouterLink>
+    <div class="bottom-nav__filter col center" v-if="route.name === 'shop'">
+      <SlidersHorizontal style="color: var(--secondary)" @click="toggleFilter" />
+      <p class="text-xs uppercase">Filter</p>
+    </div>
     <div class="col center">
       <Search style="color: var(--secondary)" />
       <p class="text-xs uppercase">Search</p>
@@ -20,7 +24,20 @@
 </template>
 
 <script setup lang="ts">
-import { Heart, Home, Search, User } from 'lucide-vue-next'
+import type { IFilter } from '@/views/ShopView.vue'
+import { Heart, Home, Search, SlidersHorizontal, User } from 'lucide-vue-next'
+import { inject } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const filterContext = inject<IFilter>('filterIsOpen')
+
+if (!filterContext) {
+  throw new Error('filterIsOpen not provided!')
+}
+
+const { toggleFilter } = filterContext
 </script>
 
 <style scoped>
@@ -33,11 +50,19 @@ import { Heart, Home, Search, User } from 'lucide-vue-next'
   background-color: var(--background);
 }
 
+.bottom-nav__filter {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .bottom-nav {
     display: flex;
     justify-content: space-between;
     width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .bottom-nav__filter {
+    display: block;
   }
 }
 
