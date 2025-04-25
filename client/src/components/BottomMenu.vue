@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom-nav">
+  <div class="bottom-nav" v-if="route.name !== 'product'">
     <RouterLink to="/" class="col center">
       <Home style="color: var(--secondary)" />
       <p class="text-xs uppercase">Home</p>
@@ -30,6 +30,7 @@ import { inject } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+console.log(route.name === 'product')
 
 const filterContext = inject<IFilter>('filterIsOpen')
 

@@ -193,6 +193,10 @@ body {
   gap: var(--spacing-3);
 }
 
+.gap-1 {
+  gap: var(--spacing-1);
+}
+
 .heading {
   text-align: center;
   margin-block: 2em 0.5em;
