@@ -1,7 +1,7 @@
 export const data = [
   {
     id: 1,
-    imgSrc: './categories/1.jpg',
+    imgSrc: '/categories/1.jpg',
     category: 'necklaces',
     href: '',
     title: 'Birds of Paradise Pendant',
@@ -12,7 +12,7 @@ export const data = [
   },
   {
     id: 2,
-    imgSrc: './categories/2.jpg',
+    imgSrc: '/categories/2.jpg',
     category: 'rings',
     href: '',
     title: 'Eternal Love Ring',
@@ -22,7 +22,7 @@ export const data = [
   },
   {
     id: 3,
-    imgSrc: './categories/3.jpg',
+    imgSrc: '/categories/3.jpg',
     category: 'bracelets',
     href: '',
     title: 'Ocean Breeze Bracelet',
@@ -33,7 +33,7 @@ export const data = [
   },
   {
     id: 4,
-    imgSrc: './categories/4.jpg',
+    imgSrc: '/categories/4.jpg',
     category: 'earrings',
     href: '',
     title: 'Starlight Earrings',
@@ -43,7 +43,7 @@ export const data = [
   },
   {
     id: 5,
-    imgSrc: './categories/5.jpg',
+    imgSrc: '/categories/5.jpg',
     category: 'charm & dangles',
     href: '',
     title: 'Lucky Clover Charm',

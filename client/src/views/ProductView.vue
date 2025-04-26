@@ -7,7 +7,9 @@
     </section>
     <section class="product__info">
       <p class="product__title">Blue Stripes & Stone Earrings</p>
-      <p>*****</p>
+      <div class="row">
+        <Star v-for="n in 5" fill="#222222" :size="14" />
+      </div>
       <p class="product__price">$249.00</p>
       <p class="product__desc">
         This regulator has a rolled diaphragm and high flow rate with reduced pressure drop.It has
@@ -23,7 +25,6 @@
               <button @click="inc()">+</button>
             </div>
           </div>
-          <!-- TODO: in this button below will be placed the ref to track if its in view -->
           <button class="product__cart center" ref="targetRef">ADD TO CART</button>
         </div>
         <button class="product__buy-now center">BUY IT NOW</button>
@@ -90,10 +91,13 @@
     <button class="center">add to cart</button>
     <button class="center">buy it now</button>
   </section>
+
+  <RelatedProducts />
 </template>
 
 <script setup lang="ts">
 import Breadcrumb from '@/components/Breadcrumb.vue'
+import RelatedProducts from '@/components/RelatedProducts.vue'
 import { useInView } from '@/composables/useInView'
 import { Clock, Handshake, Heart, RotateCcw, ShieldCheck, Star, Truck } from 'lucide-vue-next'
 import { ref } from 'vue'
@@ -253,6 +257,7 @@ const inc = () => {
   display: flex;
   justify-content: space-between;
   padding-inline: 1em;
+  z-index: 1;
 }
 
 .sticky__cart-active {

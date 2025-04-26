@@ -54,7 +54,7 @@ import RangeSlider from '@/components/RangeSlider.vue'
 import ShopCard from '@/components/ShopCard.vue'
 import { data } from '@/data'
 import { Grid2x2, Grid3x3 } from 'lucide-vue-next'
-import { inject, ref, watch, type InjectionKey, type Ref } from 'vue'
+import { inject, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()

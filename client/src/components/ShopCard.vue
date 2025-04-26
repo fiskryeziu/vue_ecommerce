@@ -10,8 +10,8 @@
         class="shop-card__buttons"
         :class="{ 'shop-card__button--active': isHovering[product.id] || isMobileScreen }"
       >
-        <Heart :strokeWidth="1" />
-        <Search :strokeWidth="1" />
+        <Heart :strokeWidth="1" :size="30" />
+        <Search :strokeWidth="1" :size="30" />
       </div>
     </div>
     <div class="shop-card__info">
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { Product } from './ProductsCarousel.vue'
-import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
+import { Heart, Search } from 'lucide-vue-next'
 
 defineProps<{
   product: Product
@@ -59,7 +59,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   text-align: center;
-  height: 100%;
+  box-sizing: border-box;
 }
 
 .shop-card__image-wrapper {
@@ -72,15 +72,11 @@ onUnmounted(() => {
 
 .shop-card__buttons {
   position: absolute;
-  height: fit-content;
   top: 1.5em;
   right: -4em;
-  color: var(--secondary);
-  overflow: hidden;
   display: flex;
-  gap: 1em;
   flex-direction: column;
-  transition: right 200ms ease-in-out;
+  gap: 1em;
 }
 
 .shop-card__button--active {
@@ -88,10 +84,8 @@ onUnmounted(() => {
 }
 
 .shop-card__buttons svg {
-  width: 30px;
-  height: 30px;
+  padding: 0.3rem;
   background-color: var(--background);
-  padding: 0.3em;
   border-radius: 50%;
   transition: background-color 0.2s ease-in;
 }
