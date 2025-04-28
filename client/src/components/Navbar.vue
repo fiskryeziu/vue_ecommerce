@@ -1,5 +1,5 @@
 <template>
-  <nav class="col">
+  <nav class="col" style="position: relative">
     <div class="nav-upper center">
       <div class="wrapper">
         <div class="menu">
@@ -15,14 +15,14 @@
         <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
           <div class="icon">
-            <User />
+            <User :strokeWidth="1" @click="toggleLoginModal" />
           </div>
           <!-- NOTE: the data count attr static for now. -->
           <div class="icon" data-count="2">
-            <Heart />
+            <Heart :strokeWidth="1" />
           </div>
           <div class="icon" data-count="1">
-            <ShoppingCart />
+            <ShoppingCart :strokeWidth="1" />
           </div>
         </div>
       </div>
@@ -36,15 +36,28 @@
     </div>
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
+  <LoginModal :open="isOpenLoginModal" @toggle="toggleLoginModal" />
 </template>
 
 <script setup lang="ts">
 import { Heart, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
+import type { IFilter } from '@/App.vue'
+import LoginModal from './LoginModal.vue'
+
+const context = inject<IFilter>('appState')
+
+if (!context) {
+  throw new Error('appState not provided!')
+}
+
+const { isOpenLoginModal, toggleLoginModal } = context
 
 const isOpen = ref(false)
+
+const loginModal = ref(false)
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value

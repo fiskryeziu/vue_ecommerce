@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import type { IFilter } from '@/App.vue'
 import RangeSlider from '@/components/RangeSlider.vue'
 import ShopCard from '@/components/ShopCard.vue'
 import { data } from '@/data'
@@ -64,17 +65,13 @@ const items = ref(data)
 
 const gridCol = ref(3)
 
-export interface IFilter {
-  isOpen: boolean
-  toggleFilter: () => void
-}
-const filterContext = inject<IFilter>('filterIsOpen')
+const context = inject<IFilter>('appState')
 
-if (!filterContext) {
-  throw new Error('filterIsOpen not provided!')
+if (!context) {
+  throw new Error('appState not provided!')
 }
 
-const { isOpen, toggleFilter } = filterContext
+const { isOpen, toggleFilter } = context
 
 const changeCol = (col: number) => {
   gridCol.value = col

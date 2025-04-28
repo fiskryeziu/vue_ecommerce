@@ -17,28 +17,27 @@
       <p class="text-xs uppercase">WishList</p>
     </RouterLink>
     <div class="col center">
-      <User style="color: var(--secondary)" />
+      <User style="color: var(--secondary)" @click="toggleLoginModal" />
       <p class="text-xs uppercase">Account</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/views/ShopView.vue'
+import type { IFilter } from '@/App.vue'
 import { Heart, Home, Search, SlidersHorizontal, User } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-console.log(route.name === 'product')
 
-const filterContext = inject<IFilter>('filterIsOpen')
+const context = inject<IFilter>('appState')
 
-if (!filterContext) {
-  throw new Error('filterIsOpen not provided!')
+if (!context) {
+  throw new Error('appState not provided!')
 }
 
-const { toggleFilter } = filterContext
+const { toggleFilter, toggleLoginModal } = context
 </script>
 
 <style scoped>

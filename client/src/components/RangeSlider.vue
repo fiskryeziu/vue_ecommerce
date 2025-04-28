@@ -31,17 +31,17 @@
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/views/ShopView.vue'
+import type { IFilter } from '@/App.vue'
 import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const filterContext = inject<IFilter>('filterIsOpen')
+const context = inject<IFilter>('appState')
 
-if (!filterContext) {
-  throw new Error('filterIsOpen not provided!')
+if (!context) {
+  throw new Error('appState not provided!')
 }
 
-const { isOpen, toggleFilter } = filterContext
+const { isOpen, toggleFilter } = context
 
 const slider = ref<HTMLElement | null>(null)
 const leftThumb = ref(0)
