@@ -8,12 +8,15 @@ import { provide, ref, type Ref } from 'vue'
 export interface IFilter {
   isOpen: boolean
   isOpenLoginModal: boolean
+  isOpenCart: boolean
   toggleFilter: () => void
   toggleLoginModal: () => void
+  toggleCart: () => void
 }
 
 const isOpen: Ref<boolean> = ref(false)
 const isOpenLoginModal: Ref<boolean> = ref(false)
+const isOpenCart: Ref<boolean> = ref(false)
 
 const toggleFilter = () => {
   isOpen.value = !isOpen.value
@@ -22,8 +25,18 @@ const toggleFilter = () => {
 const toggleLoginModal = () => {
   isOpenLoginModal.value = !isOpenLoginModal.value
 }
+const toggleCart = () => {
+  isOpenCart.value = !isOpenCart.value
+}
 
-provide('appState', { isOpen, toggleFilter, toggleLoginModal, isOpenLoginModal })
+provide('appState', {
+  isOpen,
+  toggleFilter,
+  toggleLoginModal,
+  isOpenLoginModal,
+  isOpenCart,
+  toggleCart,
+})
 </script>
 
 <!--

@@ -22,7 +22,7 @@
             <Heart :strokeWidth="1" />
           </div>
           <div class="icon" data-count="1">
-            <ShoppingCart :strokeWidth="1" />
+            <ShoppingCart :strokeWidth="1" @click="toggleCart" />
           </div>
         </div>
       </div>
@@ -37,6 +37,7 @@
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
   <LoginModal :open="isOpenLoginModal" @toggle="toggleLoginModal" />
+  <AddCart :open="isOpenCart" @toggle="toggleCart" />
 </template>
 
 <script setup lang="ts">
@@ -46,6 +47,7 @@ import { RouterLink } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
 import type { IFilter } from '@/App.vue'
 import LoginModal from './LoginModal.vue'
+import AddCart from './AddCart.vue'
 
 const context = inject<IFilter>('appState')
 
@@ -53,7 +55,7 @@ if (!context) {
   throw new Error('appState not provided!')
 }
 
-const { isOpenLoginModal, toggleLoginModal } = context
+const { isOpenLoginModal, toggleLoginModal, isOpenCart, toggleCart } = context
 
 const isOpen = ref(false)
 
