@@ -5,7 +5,7 @@
       <p @click="emit('toggle')">Close</p>
     </div>
 
-    <div class="addcart__main" v-if="true">
+    <div class="addcart__main" v-if="false">
       <div class="addcart__items">
         <div
           ref="scrollContent"
@@ -61,12 +61,18 @@
       </div>
     </div>
 
-    <div class="addcart__empty" v-else></div>
+    <div class="addcart__empty" v-else>
+      <ShoppingCart :size="100" />
+      <p>Shopping cart is empty</p>
+      <RouterLink to="/shop" @click="emit('toggle')">
+        <button>Continue Shopping</button>
+      </RouterLink>
+    </div>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { XCircle } from 'lucide-vue-next'
+import { ShoppingCart, XCircle } from 'lucide-vue-next'
 import { ref, onMounted } from 'vue'
 
 defineProps({ open: Boolean })
@@ -113,7 +119,7 @@ onMounted(() => {
   background-color: var(--background);
   z-index: 2;
   padding: 1em 0.4em 1em 1em;
-  transition: right 200ms ease-in;
+  transition: right 500ms ease-in-out;
 }
 
 .addcart-active {
@@ -285,6 +291,30 @@ onMounted(() => {
 
 .outline:hover {
   background-color: var(--primary);
+  color: var(--background);
+}
+
+.addcart__empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin-top: 3em;
+}
+.addcart__empty > svg,
+p {
+  color: var(--secondary);
+}
+
+.addcart__empty a {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  padding-block: 0.7em;
+  margin-block: 2em;
   color: var(--background);
 }
 </style>
