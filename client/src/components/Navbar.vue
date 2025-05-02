@@ -19,7 +19,9 @@
           </div>
           <!-- NOTE: the data count attr static for now. -->
           <div class="icon" data-count="2">
-            <Heart :strokeWidth="1" />
+            <RouterLink to="/wishlist">
+              <Heart :strokeWidth="1" />
+            </RouterLink>
           </div>
           <div class="icon" data-count="1">
             <ShoppingCart :strokeWidth="1" @click="toggleCart" />

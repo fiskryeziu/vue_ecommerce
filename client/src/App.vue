@@ -41,12 +41,10 @@ provide('appState', {
 
 <!--
 TODO:
-- [x] add colors, vars, layout & other things in css
-- [x] swiper.js for carousels
-- [x] finish the frontend with dummy data first
-- [] login modal
+- [x] login modal
+- [x] add-cart sidebar
 - [] wishlist page
-- [] add to cart sidebar
+- [] my-account / login / register page
 - [] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
 -->

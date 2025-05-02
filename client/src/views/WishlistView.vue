@@ -1,0 +1,179 @@
+<template>
+  <Breadcrumb :items="links" />
+  <main>
+    <h1 class="heading">Wishlist</h1>
+    <!--  768+px -->
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Product name</th>
+          <th>Unit price</th>
+          <th>Stock status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="length > 0">
+          <!-- TODO: remove from wishlist -->
+          <td><XCircle /></td>
+          <td><img src="/products/earrings.jpg" alt="" /></td>
+          <td class="wishlist__title">
+            <RouterLink to="/product/1">Blue Stripes & Stone Earrings</RouterLink>
+          </td>
+          <td class="wishlist__price">$249.00</td>
+          <td>In Stock</td>
+          <td class="wishlist__add-to-cart">
+            <!-- this will add to add to cart and toggle the add to cart sidebar -->
+            <button>Add to cart</button>
+          </td>
+        </tr>
+        <tr v-else class="table__empty">
+          <td colspan="5">No products added to the wishlist</td>
+        </tr>
+      </tbody>
+    </table>
+    <!--  768-px -->
+
+    <section>
+      <div class="wishlist__img">
+        <img src="/products/earrings.jpg" alt="" />
+      </div>
+      <div class="wishlist__info">
+        <div>
+          <p>Circle of Light Heart Earrings</p>
+          <XCircle class="left" />
+        </div>
+        <div>
+          <span>Price:</span>
+          <p class="wishlist__price left">$249</p>
+        </div>
+        <div>
+          <span>Stock:</span>
+          <p class="left">In Stock</p>
+        </div>
+        <!-- TODO: remove from wishlist -->
+        <button>Add to cart</button>
+      </div>
+    </section>
+  </main>
+</template>
+
+<script setup lang="ts">
+import Breadcrumb from '@/components/Breadcrumb.vue'
+import { XCircle } from 'lucide-vue-next'
+import { RouterLink } from 'vue-router'
+
+const links = [
+  { label: 'Home', link: '/' },
+  { label: 'Wishlist', link: '' },
+]
+
+// mock wishlist product length
+const length = 1
+</script>
+
+<style scoped>
+tbody {
+  border-block: 1px solid var(--lightest);
+}
+
+table {
+  width: 100%;
+  display: none;
+}
+
+svg {
+  cursor: pointer;
+  color: var(--secondary);
+}
+
+thead th:nth-child(2) {
+  width: 100px;
+}
+td,
+th {
+  padding-block: 1em;
+  text-align: center;
+}
+tbody td {
+  vertical-align: middle;
+  text-align: center;
+  padding: 1rem;
+}
+
+.table__empty td {
+  text-align: center;
+  padding-block: 1em;
+  color: var(--secondary);
+}
+
+.wishlist__price {
+  font-weight: var(--font-medium);
+}
+
+.wishlist__add-to-cart button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  padding-block: 0.7em;
+  margin-block: 0.2em;
+  color: var(--background);
+  flex-shrink: 0;
+}
+
+/* mobile wishlist */
+
+section {
+  display: none;
+}
+.wishlist__img {
+  flex: 0 0 20%;
+  min-width: 100px;
+}
+.wishlist__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.wishlist__info {
+  flex-basis: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.wishlist__info div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wishlist__info span {
+  font-size: 12px;
+}
+
+.info__left p:not(:first-child) {
+  font-size: 12px;
+}
+
+.left {
+  color: var(--secondary);
+}
+
+@media screen and (min-width: 768px) {
+  table {
+    display: table;
+  }
+}
+@media screen and (max-width: 768px) {
+  section {
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+    width: 100%;
+  }
+}
+</style>

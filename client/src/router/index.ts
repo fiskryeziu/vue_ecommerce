@@ -5,6 +5,7 @@ import AboutView from '@/views/AboutView.vue'
 import ContactView from '@/views/ContactView.vue'
 import ShopView from '@/views/ShopView.vue'
 import ProductView from '@/views/ProductView.vue'
+import WishlistView from '@/views/WishlistView.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const isAuthed = true
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/shop',
       name: 'shop',
       component: ShopView,
+    },
+    {
+      path: '/wishlist',
+      name: 'wishlist',
+      component: WishlistView,
     },
     {
       path: '/product/:slug',
