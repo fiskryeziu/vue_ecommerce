@@ -43,8 +43,9 @@ provide('appState', {
 TODO:
 - [x] login modal
 - [x] add-cart sidebar
-- [] wishlist page
-- [] my-account / login / register page
+- [x] wishlist page
+- [x] my-account / login / register page
+- [] use store/appstate to store the state, rm the provide/inject stuff.
 - [] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
 -->

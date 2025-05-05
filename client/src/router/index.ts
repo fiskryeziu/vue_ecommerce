@@ -7,6 +7,7 @@ import ShopView from '@/views/ShopView.vue'
 import ProductView from '@/views/ProductView.vue'
 import WishlistView from '@/views/WishlistView.vue'
 import NotFound from '@/views/NotFound.vue'
+import MyAccountView from '@/components/MyAccountView.vue'
 
 const isAuthed = true
 
@@ -17,11 +18,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      beforeEnter: (to, from) => {
-        if (!isAuthed && to.name !== 'login') {
-          return { name: 'login' }
-        }
-      },
     },
     {
       path: '/about',
@@ -42,6 +38,11 @@ const router = createRouter({
       path: '/wishlist',
       name: 'wishlist',
       component: WishlistView,
+    },
+    {
+      path: '/my-account',
+      name: 'my account',
+      component: MyAccountView,
     },
     {
       path: '/product/:slug',
