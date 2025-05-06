@@ -3,6 +3,7 @@
     {
       "id": 1,
       "title": "Vintage Leather Jacket",
+      "slug": "vintage-leather-jacket",
       "desc": "A stylish vintage leather jacket perfect for winter fashion.",
       "price": 120,
       "compareprice": 160,
@@ -13,6 +14,7 @@
     {
       "id": 2,
       "title": "Bluetooth Wireless Headphones",
+      "slug": "bluetooth-wireless-headphones",
       "desc": "Noise-canceling over-ear Bluetooth headphones with long-lasting battery life.",
       "price": 80,
       "compareprice": 120,
@@ -23,6 +25,7 @@
     {
       "id": 3,
       "title": "Smartphone 128GB",
+      "slug": "smartphone-128gb",
       "desc": "Latest model smartphone with 128GB storage and powerful camera.",
       "price": 699,
       "compareprice": 799,
@@ -33,6 +36,7 @@
     {
       "id": 4,
       "title": "Leather Wallet",
+      "slug": "leather-wallet",
       "desc": "High-quality leather wallet with multiple card slots.",
       "price": 45,
       "compareprice": null,
@@ -43,6 +47,7 @@
     {
       "id": 5,
       "title": "Stylish Running Shoes",
+      "slug": "stylish-running-shoes",
       "desc": "Comfortable and stylish running shoes for daily workouts.",
       "price": 90,
       "compareprice": 110,
@@ -53,6 +58,7 @@
     {
       "id": 6,
       "title": "Classic Wristwatch",
+      "slug": "classic-wristwatch",
       "desc": "Elegant wristwatch with a stainless steel band, perfect for formal occasions.",
       "price": 150,
       "compareprice": 200,
@@ -63,6 +69,7 @@
     {
       "id": 7,
       "title": "Portable Power Bank",
+      "slug": "portable-power-bank",
       "desc": "Compact power bank with 10,000mAh capacity for charging on the go.",
       "price": 30,
       "compareprice": null,
@@ -73,6 +80,7 @@
     {
       "id": 8,
       "title": "Wooden Coffee Table",
+      "slug": "wooden-coffee-table",
       "desc": "Stylish wooden coffee table with a modern design for your living room.",
       "price": 250,
       "compareprice": 300,
@@ -83,6 +91,7 @@
     {
       "id": 9,
       "title": "Smart Fitness Tracker",
+      "slug": "smart-fitness-tracker",
       "desc": "Track your health metrics and daily activities with this advanced fitness tracker.",
       "price": 50,
       "compareprice": null,
@@ -93,6 +102,7 @@
     {
       "id": 10,
       "title": "Luxury Bed Sheets Set",
+      "slug": "luxury-bed-sheets-set",
       "desc": "Soft, breathable, and high-quality cotton bed sheets to enhance your sleep.",
       "price": 85,
       "compareprice": 100,
@@ -103,6 +113,7 @@
     {
       "id": 11,
       "title": "Gaming Laptop 16GB RAM",
+      "slug": "gaming-laptop-16gb-ram",
       "desc": "High-performance gaming laptop with 16GB RAM and 1TB SSD storage.",
       "price": 1500,
       "compareprice": 1800,
@@ -113,6 +124,7 @@
     {
       "id": 12,
       "title": "Bluetooth Smart Speaker",
+      "slug": "bluetooth-smart-speaker",
       "desc": "Portable Bluetooth speaker with immersive sound and waterproof design.",
       "price": 45,
       "compareprice": null,
@@ -123,6 +135,7 @@
     {
       "id": 13,
       "title": "Air Purifier with HEPA Filter",
+      "slug": "air-purifier-with-hepa-filter",
       "desc": "Advanced air purifier with a HEPA filter for cleaner and fresher air.",
       "price": 120,
       "compareprice": 150,
@@ -133,6 +146,7 @@
     {
       "id": 14,
       "title": "Leather Backpack",
+      "slug": "leather-backpack",
       "desc": "Stylish and durable leather backpack perfect for daily use.",
       "price": 110,
       "compareprice": null,
@@ -143,6 +157,7 @@
     {
       "id": 15,
       "title": "Compact Digital Camera",
+      "slug": "compact-digital-camera",
       "desc": "High-resolution digital camera with a compact design, perfect for photography on the go.",
       "price": 200,
       "compareprice": 250,
@@ -153,6 +168,7 @@
     {
       "id": 16,
       "title": "Portable Mini Fridge",
+      "slug": "portable-mini-fridge",
       "desc": "Compact mini fridge for storing snacks, drinks, or skincare products.",
       "price": 90,
       "compareprice": null,
@@ -163,6 +179,7 @@
     {
       "id": 17,
       "title": "Kitchen Knife Set",
+      "slug": "kitchen-knife-set",
       "desc": "Premium kitchen knife set with ergonomic handles for easy use.",
       "price": 60,
       "compareprice": 80,
@@ -173,6 +190,7 @@
     {
       "id": 18,
       "title": "Luxury Perfume",
+      "slug": "luxury-perfume",
       "desc": "Exquisite fragrance with long-lasting scent, perfect for special occasions.",
       "price": 90,
       "compareprice": 120,
@@ -183,6 +201,7 @@
     {
       "id": 19,
       "title": "Cotton T-Shirt",
+      "slug": "cotton-t-shirt",
       "desc": "Soft and breathable cotton t-shirt, ideal for everyday wear.",
       "price": 25,
       "compareprice": null,
@@ -193,6 +212,7 @@
     {
       "id": 20,
       "title": "Electric Toothbrush",
+      "slug": "electric-toothbrush",
       "desc": "Advanced electric toothbrush with multiple cleaning modes and a long-lasting battery.",
       "price": 60,
       "compareprice": 80,

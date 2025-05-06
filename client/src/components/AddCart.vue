@@ -5,7 +5,7 @@
       <p @click="emit('toggle')">Close</p>
     </div>
 
-    <div class="addcart__main" v-if="false">
+    <div class="addcart__main" v-if="true">
       <div class="addcart__items">
         <div
           ref="scrollContent"

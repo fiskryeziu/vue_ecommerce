@@ -11,7 +11,7 @@
         <input type="password" name="password" />
       </div>
       <div>
-        <RouterLink to="/my-account/register">Don't have an account?</RouterLink>
+        <RouterLink to="/my-account" @click="$emit('toggle')">Don't have an account?</RouterLink>
       </div>
       <button class="center">Log in</button>
       <XCircle class="close-btn" :strokeWidth="1" @click="$emit('toggle')" />
