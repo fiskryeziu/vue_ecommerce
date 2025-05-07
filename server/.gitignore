@@ -10,6 +10,13 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+bun.lockb
+
+# Docker files
+.docker/
+docker-compose.override.yml
+
+
 # Caches
 
 .cache
