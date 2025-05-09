@@ -103,23 +103,6 @@ app.post("/api/logout", (req, res) => {
   res.json({ message: "Logged out" });
 });
 
-async function testPoolConnection() {
-  try {
-    const client = await pool.connect(); // Get a client from the pool
-    console.log("Connection successful!");
-
-    // Execute a simple query
-    const res = await client.query("SELECT NOW()");
-    console.log("Current time from DB:", res.rows[0]);
-
-    client.release(); // Release the client back to the pool
-  } catch (err) {
-    console.error("Error connecting to PostgreSQL:", err);
-  }
-}
-
-testPoolConnection();
-
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
