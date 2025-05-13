@@ -1,10 +1,6 @@
-import "express";
-//sample
+import { AuthPayload } from "../user";
 declare module "express" {
   interface Request {
-    user?: {
-      username: string;
-      [key: string]: any;
-    };
+    user?: AuthPayload;
   }
 }

@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { AuthPayload } from "../types/user";
 
 const SECRET_KEY = process.env.JWT_SECRET || "default_secret_key";
 
@@ -15,7 +16,7 @@ export const authenticate = (
   }
 
   try {
-    const decoded = jwt.verify(token, SECRET_KEY) as jwt.JwtPayload;
+    const decoded = jwt.verify(token, SECRET_KEY) as AuthPayload;
     req.user = decoded;
     next();
   } catch (err) {
