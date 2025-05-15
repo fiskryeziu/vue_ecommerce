@@ -7,9 +7,13 @@ export const findUserByUsername = async (username: string) => {
   return res.rows[0];
 };
 
-export const createUser = async (username: string, hashedPassword: string) => {
-  await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
-    username,
-    hashedPassword,
-  ]);
+export const createUser = async (
+  username: string,
+  email: string,
+  hashedPassword: string,
+) => {
+  await pool.query(
+    "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
+    [username, email, hashedPassword],
+  );
 };

@@ -1,22 +1,35 @@
 import type { Request, Response } from "express";
-import * as authService from "../services/auth.service";
+import { loginUser, registerUser } from "../services/auth.service";
 
 export const signup = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  const user = await authService.registerUser(username, password);
-  res.status(201).json({ message: "User created", user });
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ error: "username, email, and password are required" });
+  }
+  try {
+    const user = await registerUser(username, email, password);
+    res.status(201).json({ message: "User created", user });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
 };
 
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-  const token = await authService.loginUser(username, password);
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    maxAge: 3600000,
-  });
-  res.json({ message: "Logged in successfully" });
+  try {
+    const token = await loginUser(username, password);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
+    res.json({ message: "Logged in successfully" });
+  } catch (error) {
+    res.status(401).json({ message: (error as Error).message });
+  }
 };
 
 export const me = async (req: Request, res: Response) => {
