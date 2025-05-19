@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { AuthPayload } from "../types/user";
+import type { AuthPayload } from "../types/user";
 
-const SECRET_KEY = process.env.JWT_SECRET || "default_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET || "secret";
 
 export const authenticate = (
   req: Request,
@@ -12,7 +12,7 @@ export const authenticate = (
   const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "unauthorized" });
   }
 
   try {

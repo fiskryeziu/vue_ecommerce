@@ -12,8 +12,6 @@ export const registerUser = async (
   const existing = await findUserByUsername(username);
   if (existing) throw new Error("User already exists");
 
-  console.log("why I'm getting a call here");
-
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return await createUser(username, email, hashedPassword);

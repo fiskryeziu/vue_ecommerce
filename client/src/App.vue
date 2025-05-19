@@ -14,9 +14,11 @@ export interface IFilter {
   toggleCart: () => void
 }
 
+
 const isOpen: Ref<boolean> = ref(false)
 const isOpenLoginModal: Ref<boolean> = ref(false)
 const isOpenCart: Ref<boolean> = ref(false)
+
 
 const toggleFilter = () => {
   isOpen.value = !isOpen.value
@@ -48,7 +50,9 @@ TODO:
 - [] use store/appstate to store the state, rm the provide/inject stuff.
 - [] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
+
 -->
+
 <template>
   <Navbar />
   <main>

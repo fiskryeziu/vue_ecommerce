@@ -21,19 +21,20 @@ export const login = async (req: Request, res: Response) => {
   try {
     const token = await loginUser(username, password);
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      httpOnly: false,
+      // TODO: in prod to true
+      secure: false,
+      sameSite: "lax",
       maxAge: 3600000,
     });
-    res.json({ message: "Logged in successfully" });
+    res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     res.status(401).json({ message: (error as Error).message });
   }
 };
 
 export const me = async (req: Request, res: Response) => {
-  res.json({ user: req.user });
+  res.json({ user: req.user, message: "authorized" });
 };
 
 export const logout = async (_req: Request, res: Response) => {
