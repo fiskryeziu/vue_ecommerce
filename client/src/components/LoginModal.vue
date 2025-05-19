@@ -70,7 +70,7 @@ const loginHandler = async () => {
 
 <style scoped>
 .login__modal {
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: -100%;
   transform: translateX(-50%);
@@ -86,7 +86,7 @@ const loginHandler = async () => {
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   inset: 0;
