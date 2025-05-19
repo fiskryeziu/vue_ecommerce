@@ -12,12 +12,12 @@
       <Search style="color: var(--secondary)" />
       <p class="text-xs uppercase">Search</p>
     </div>
-    <RouterLink to="/wishlist" class="col center">
+    <RouterLink to="wishlist" class="col center">
       <Heart style="color: var(--secondary)" />
       <p class="text-xs uppercase">WishList</p>
     </RouterLink>
     <div class="col center">
-      <User style="color: var(--secondary)" @click="toggleLoginModal" />
+      <User style="color: var(--secondary)" @click="clickHandler" />
       <p class="text-xs uppercase">Account</p>
     </div>
   </div>
@@ -27,9 +27,10 @@
 import type { IFilter } from '@/App.vue'
 import { Heart, Home, Search, SlidersHorizontal, User } from 'lucide-vue-next'
 import { inject } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const context = inject<IFilter>('appState')
 
@@ -37,7 +38,15 @@ if (!context) {
   throw new Error('appState not provided!')
 }
 
-const { toggleFilter, toggleLoginModal } = context
+const { toggleFilter, toggleLoginModal, isAuthed } = context
+
+const clickHandler = () => {
+  if (isAuthed) {
+    router.push('/my-account')
+  } else {
+    toggleLoginModal()
+  }
+}
 </script>
 
 <style scoped>

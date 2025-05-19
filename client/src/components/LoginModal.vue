@@ -1,14 +1,14 @@
 <template>
   <div class="login__modal" :class="{ 'login__modal-active': open }">
-    <form>
+    <form @submit.prevent="loginHandler">
       <h2>Login</h2>
       <div class="col gap">
-        <label for="emailaddress">Email Address</label>
-        <input type="text" />
+        <label for="username">Username</label>
+        <input type="text" v-model="username" />
       </div>
       <div class="col gap">
         <label for="password">Password</label>
-        <input type="password" name="password" />
+        <input type="password" name="password" v-model="password" />
       </div>
       <div>
         <RouterLink to="/my-account" @click="$emit('toggle')">Don't have an account?</RouterLink>
@@ -19,12 +19,53 @@
   </div>
   <div class="overlay" v-if="open" @click="$emit('toggle')"></div>
 </template>
-
 <script setup lang="ts">
+import type { IFilter } from '@/App.vue'
 import { XCircle } from 'lucide-vue-next'
+import { ref, inject } from 'vue'
 
 defineProps({ open: Boolean })
-defineEmits(['toggle'])
+const emit = defineEmits(['toggle'])
+
+const username = ref('')
+const password = ref('')
+
+const context = inject<IFilter>('appState')
+
+if (!context) {
+  throw new Error('appState not provided!')
+}
+
+const { isAuthed } = context
+
+const loginHandler = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
+      credentials: 'include',
+    })
+    const data = await res.json()
+
+    console.log(res)
+    if (res.ok) {
+      isAuthed.value = true
+      emit('toggle')
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message)
+    } else {
+      console.log(error)
+    }
+  }
+}
 </script>
 
 <style scoped>

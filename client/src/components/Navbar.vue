@@ -14,7 +14,7 @@
         </form>
         <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
-          <div class="icon">
+          <div class="icon" v-if="showLoginIcon">
             <User :strokeWidth="1" @click="toggleLoginModal" />
           </div>
           <!-- NOTE: the data count attr static for now. -->
@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { Heart, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
-import { inject, ref } from 'vue'
+import { inject, ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
 import type { IFilter } from '@/App.vue'
@@ -57,15 +57,29 @@ if (!context) {
   throw new Error('appState not provided!')
 }
 
-const { isOpenLoginModal, toggleLoginModal, isOpenCart, toggleCart } = context
+const { isOpenLoginModal, toggleLoginModal, isOpenCart, toggleCart, isAuthed } = context
+
+const showLoginIcon = computed(() => !isAuthed.value)
 
 const isOpen = ref(false)
-
-const loginModal = ref(false)
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
+
+const isLoggedIn = async () => {
+  const res = await fetch('http://localhost:3000/api/auth/me', {
+    method: 'GET',
+    credentials: 'include',
+  })
+  const data = await res.json()
+
+  data.message === 'unauthorized' ? (isAuthed.value = false) : (isAuthed.value = true)
+}
+
+onMounted(() => {
+  isLoggedIn()
+})
 </script>
 
 <style scoped>

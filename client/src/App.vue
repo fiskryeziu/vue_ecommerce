@@ -6,19 +6,19 @@ import Footer from './components/Footer.vue'
 import { provide, ref, type Ref } from 'vue'
 
 export interface IFilter {
-  isOpen: boolean
-  isOpenLoginModal: boolean
-  isOpenCart: boolean
+  isOpen: Ref<boolean>
+  isOpenLoginModal: Ref<boolean>
+  isOpenCart: Ref<boolean>
+  isAuthed: Ref<boolean>
   toggleFilter: () => void
   toggleLoginModal: () => void
   toggleCart: () => void
 }
 
-
 const isOpen: Ref<boolean> = ref(false)
 const isOpenLoginModal: Ref<boolean> = ref(false)
 const isOpenCart: Ref<boolean> = ref(false)
-
+const isAuthed: Ref<boolean> = ref(false)
 
 const toggleFilter = () => {
   isOpen.value = !isOpen.value
@@ -33,6 +33,7 @@ const toggleCart = () => {
 
 provide('appState', {
   isOpen,
+  isAuthed,
   toggleFilter,
   toggleLoginModal,
   isOpenLoginModal,
@@ -50,7 +51,6 @@ TODO:
 - [] use store/appstate to store the state, rm the provide/inject stuff.
 - [] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
-
 -->
 
 <template>
