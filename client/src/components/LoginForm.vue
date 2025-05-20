@@ -1,9 +1,9 @@
 <template>
-  <form @submit.prevent="handleLogin">
+  <form @submit.prevent="loginHandler">
     <h2>Login</h2>
     <div class="col gap">
-      <label for="email">Email</label>
-      <input v-model="email" type="email" required />
+      <label for="username">Username</label>
+      <input v-model="username" type="text" required />
     </div>
     <div class="col gap">
       <label for="password">Password</label>
@@ -17,14 +17,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { IFilter } from '@/App.vue'
+import { inject, ref } from 'vue'
 
 defineEmits(['toggle'])
-const email = ref('')
+const username = ref('')
 const password = ref('')
 
-function handleLogin() {
-  alert(`Logging in with: ${email.value}, ${password.value}`)
+const context = inject<IFilter>('appState')
+
+if (!context) {
+  throw new Error('appState not provided!')
+}
+
+const { isAuthed } = context
+
+const loginHandler = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
+      credentials: 'include',
+    })
+    const data = await res.json()
+
+    console.log(res)
+    if (res.ok) {
+      isAuthed.value = true
+      emit('toggle')
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message)
+    } else {
+      console.log(error)
+    }
+  }
 }
 </script>
 
