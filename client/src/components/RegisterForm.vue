@@ -2,8 +2,8 @@
   <form @submit.prevent="handleRegister">
     <h2>Register</h2>
     <div class="col gap">
-      <label for="name">Name</label>
-      <input v-model="name" type="text" required />
+      <label for="name">Username</label>
+      <input v-model="username" type="text" required />
     </div>
     <div class="col gap">
       <label for="email">Email</label>
@@ -25,12 +25,35 @@ import { ref } from 'vue'
 
 defineEmits(['toggle'])
 
-const name = ref('')
+const username = ref('')
 const email = ref('')
 const password = ref('')
 
-function handleRegister() {
-  alert(`Registering: ${name.value}, ${email.value}`)
+const handleRegister = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        email: email.value,
+        password: password.value,
+      }),
+    })
+
+    if (res.ok) {
+      username.value = ''
+      email.value = ''
+      password.value = ''
+    } else {
+      const e = await res.json()
+      console.error('Signup failed:', e.message)
+    }
+  } catch (error) {
+    console.error('Network or server error:', error)
+  }
 }
 </script>
 

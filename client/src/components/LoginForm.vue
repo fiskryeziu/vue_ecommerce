@@ -20,7 +20,7 @@
 import type { IFilter } from '@/App.vue'
 import { inject, ref } from 'vue'
 
-defineEmits(['toggle'])
+const emit = defineEmits(['toggle'])
 const username = ref('')
 const password = ref('')
 
@@ -45,8 +45,6 @@ const loginHandler = async () => {
       }),
       credentials: 'include',
     })
-    const data = await res.json()
-
     console.log(res)
     if (res.ok) {
       isAuthed.value = true

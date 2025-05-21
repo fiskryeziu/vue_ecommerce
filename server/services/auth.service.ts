@@ -1,6 +1,10 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { createUser, findUserByUsername } from "../db/user.queries";
+import {
+  createUser,
+  findUserByEmail,
+  findUserByUsername,
+} from "../db/user.queries";
 
 const SECRET_KEY = process.env.JWT_SECRET || "secret";
 
@@ -9,8 +13,9 @@ export const registerUser = async (
   email: string,
   password: string,
 ) => {
-  const existing = await findUserByUsername(username);
-  if (existing) throw new Error("User already exists");
+  const usernameExist = await findUserByUsername(username);
+  const emailExist = await findUserByEmail(email);
+  if (usernameExist || emailExist) throw new Error("User already exists");
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
