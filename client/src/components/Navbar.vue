@@ -15,7 +15,7 @@
         <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
           <div class="icon" v-if="showLoginIcon">
-            <User :strokeWidth="1" @click="toggleLoginModal" />
+            <User :strokeWidth="1" @click="() => ui.toggleLoginModal" />
           </div>
           <!-- NOTE: the data count attr static for now. -->
           <div class="icon" data-count="2">
@@ -24,7 +24,7 @@
             </RouterLink>
           </div>
           <div class="icon" data-count="1">
-            <ShoppingCart :strokeWidth="1" @click="toggleCart" />
+            <ShoppingCart :strokeWidth="1" @click="() => ui.toggleCart" />
           </div>
         </div>
       </div>
@@ -38,28 +38,24 @@
     </div>
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
-  <LoginModal :open="isOpenLoginModal" @toggle="toggleLoginModal" />
-  <AddCart :open="isOpenCart" @toggle="toggleCart" />
+  <LoginModal :open="ui.isOpenLoginModal" @toggle="() => ui.toggleLoginModal" />
+  <AddCart :open="ui.isOpenCart" @toggle="() => ui.toggleCart" />
 </template>
 
 <script setup lang="ts">
 import { Heart, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
-import { inject, ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
-import type { IFilter } from '@/App.vue'
 import LoginModal from './LoginModal.vue'
 import AddCart from './AddCart.vue'
+import { useUserStore } from '@/stores/userStore'
+import { useUIStore } from '@/stores/uiStore'
 
-const context = inject<IFilter>('appState')
+const user = useUserStore()
+const ui = useUIStore()
 
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isOpenLoginModal, toggleLoginModal, isOpenCart, toggleCart, isAuthed } = context
-
-const showLoginIcon = computed(() => !isAuthed.value)
+const showLoginIcon = computed(() => !user.isAuthed)
 
 const isOpen = ref(false)
 
@@ -67,18 +63,8 @@ const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
 
-const isLoggedIn = async () => {
-  const res = await fetch('http://localhost:3000/api/auth/me', {
-    method: 'GET',
-    credentials: 'include',
-  })
-  const data = await res.json()
-
-  data.message === 'unauthorized' ? (isAuthed.value = false) : (isAuthed.value = true)
-}
-
 onMounted(() => {
-  isLoggedIn()
+  user.isLoggedIn()
 })
 </script>
 

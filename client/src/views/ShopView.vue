@@ -3,7 +3,7 @@
     <div class="shop__banner">
       <img src="/shop-banner.png" alt="" />
     </div>
-    <aside class="filter__container" :class="{ 'filter__cotainer-active': isOpen }">
+    <aside class="filter__container" :class="{ 'filter__cotainer-active': ui.isOpen }">
       <div class="filter__wrapper">
         <section class="filter__category">
           <h2>Categories</h2>
@@ -23,7 +23,7 @@
         </section>
       </div>
     </aside>
-    <div class="filter__overlay" v-if="isOpen" @click="toggleFilter"></div>
+    <div class="filter__overlay" v-if="ui.isOpen" @click="ui.toggleFilter"></div>
     <main>
       <div class="shop__sort">
         <p>1–12 Products of 34 Products</p>
@@ -50,12 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/App.vue'
 import RangeSlider from '@/components/RangeSlider.vue'
 import ShopCard from '@/components/ShopCard.vue'
 import { data } from '@/data'
+import { useUIStore } from '@/stores/uiStore'
 import { Grid2x2, Grid3x3 } from 'lucide-vue-next'
-import { inject, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
@@ -65,13 +65,7 @@ const items = ref(data)
 
 const gridCol = ref(3)
 
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isOpen, toggleFilter } = context
+const ui = useUIStore()
 
 const changeCol = (col: number) => {
   gridCol.value = col
@@ -87,7 +81,7 @@ const addParam = (key: string, value: string) => {
   }
 
   router.push({ query: current })
-  toggleFilter()
+  ui.toggleFilter
 }
 
 watch(

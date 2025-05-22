@@ -35,18 +35,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ref } from 'vue'
 import CardProduct from './CardProduct.vue'
 import { data } from '@/data'
-
-export type Product = {
-  id: number
-  title: string
-  desc: string
-  imgSrc: string
-  price: number
-  comparePrice?: number
-  category: string
-  rating: number
-  href?: string
-}
+import type { Product } from './RelatedProducts.vue'
 
 defineProps<{
   category: string

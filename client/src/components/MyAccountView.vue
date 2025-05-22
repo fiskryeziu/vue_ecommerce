@@ -1,7 +1,7 @@
 <!-- do the login register ui for know -->
 <template>
   <Breadcrumb :items="links" />
-  <template v-if="isAuthed">
+  <template v-if="user.isAuthed">
     <!-- dashboard stuff -->
     <h2>User data</h2>
   </template>
@@ -12,26 +12,19 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import Breadcrumb from './Breadcrumb.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
-import type { IFilter } from '@/App.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const links = [
   { label: 'Home', link: '/' },
   { label: 'My Account', link: '' },
 ]
 
+const user = useUserStore()
 const hasAccount = ref(true)
-
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isAuthed } = context
 
 onMounted(() => {
   const saved = localStorage.getItem('hasAccount')
@@ -40,18 +33,8 @@ onMounted(() => {
   }
 })
 
-const isLoggedIn = async () => {
-  const res = await fetch('http://localhost:3000/api/auth/me', {
-    method: 'GET',
-    credentials: 'include',
-  })
-  const data = await res.json()
-
-  data.message === 'unauthorized' ? (isAuthed.value = false) : (isAuthed.value = true)
-}
-
 onMounted(() => {
-  isLoggedIn()
+  user.isLoggedIn()
 })
 
 watch(hasAccount, (value) => {

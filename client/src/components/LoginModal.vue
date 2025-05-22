@@ -20,9 +20,9 @@
   <div class="overlay" v-if="open" @click="$emit('toggle')"></div>
 </template>
 <script setup lang="ts">
-import type { IFilter } from '@/App.vue'
+import { useUserStore } from '@/stores/userStore'
 import { XCircle } from 'lucide-vue-next'
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 
 defineProps({ open: Boolean })
 const emit = defineEmits(['toggle'])
@@ -30,14 +30,7 @@ const emit = defineEmits(['toggle'])
 const username = ref('')
 const password = ref('')
 
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isAuthed } = context
-
+const user = useUserStore()
 const loginHandler = async () => {
   try {
     const res = await fetch('http://localhost:3000/api/auth/login', {
@@ -51,11 +44,10 @@ const loginHandler = async () => {
       }),
       credentials: 'include',
     })
-    const data = await res.json()
+    // const data = await res.json()
 
-    console.log(res)
     if (res.ok) {
-      isAuthed.value = true
+      user.login
       emit('toggle')
     }
   } catch (error) {

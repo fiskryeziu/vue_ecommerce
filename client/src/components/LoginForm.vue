@@ -17,20 +17,14 @@
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/App.vue'
-import { inject, ref } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import { ref } from 'vue'
 
 const emit = defineEmits(['toggle'])
 const username = ref('')
 const password = ref('')
 
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isAuthed } = context
+const user = useUserStore()
 
 const loginHandler = async () => {
   try {
@@ -47,7 +41,7 @@ const loginHandler = async () => {
     })
     console.log(res)
     if (res.ok) {
-      isAuthed.value = true
+      user.login
       emit('toggle')
     }
   } catch (error) {

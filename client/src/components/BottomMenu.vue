@@ -5,7 +5,7 @@
       <p class="text-xs uppercase">Home</p>
     </RouterLink>
     <div class="bottom-nav__filter col center" v-if="route.name === 'shop'">
-      <SlidersHorizontal style="color: var(--secondary)" @click="toggleFilter" />
+      <SlidersHorizontal style="color: var(--secondary)" @click="() => ui.toggleFilter" />
       <p class="text-xs uppercase">Filter</p>
     </div>
     <div class="col center">
@@ -24,27 +24,22 @@
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/App.vue'
+import { useUIStore } from '@/stores/uiStore'
+import { useUserStore } from '@/stores/userStore'
 import { Heart, Home, Search, SlidersHorizontal, User } from 'lucide-vue-next'
-import { inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+const user = useUserStore()
+const ui = useUIStore()
 
 const route = useRoute()
 const router = useRouter()
 
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { toggleFilter, toggleLoginModal, isAuthed } = context
-
 const clickHandler = () => {
-  if (isAuthed) {
+  if (user.isAuthed) {
     router.push('/my-account')
   } else {
-    toggleLoginModal()
+    ui.toggleLoginModal
   }
 }
 </script>

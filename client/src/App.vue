@@ -3,53 +3,11 @@ import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import BottomMenu from './components/BottomMenu.vue'
 import Footer from './components/Footer.vue'
-import { provide, ref, type Ref } from 'vue'
-
-export interface IFilter {
-  isOpen: Ref<boolean>
-  isOpenLoginModal: Ref<boolean>
-  isOpenCart: Ref<boolean>
-  isAuthed: Ref<boolean>
-  toggleFilter: () => void
-  toggleLoginModal: () => void
-  toggleCart: () => void
-}
-
-const isOpen: Ref<boolean> = ref(false)
-const isOpenLoginModal: Ref<boolean> = ref(false)
-const isOpenCart: Ref<boolean> = ref(false)
-const isAuthed: Ref<boolean> = ref(false)
-
-const toggleFilter = () => {
-  isOpen.value = !isOpen.value
-}
-
-const toggleLoginModal = () => {
-  isOpenLoginModal.value = !isOpenLoginModal.value
-}
-const toggleCart = () => {
-  isOpenCart.value = !isOpenCart.value
-}
-
-provide('appState', {
-  isOpen,
-  isAuthed,
-  toggleFilter,
-  toggleLoginModal,
-  isOpenLoginModal,
-  isOpenCart,
-  toggleCart,
-})
 </script>
 
 <!--
 TODO:
-- [x] login modal
-- [x] add-cart sidebar
-- [x] wishlist page
-- [x] my-account / login / register page
-- [] use store/appstate to store the state, rm the provide/inject stuff.
-- [] authentication with jwt(localstorage/cookies)
+- [x] authentication with jwt(localstorage/cookies)
 - [] payment gateway with stripe
 -->
 

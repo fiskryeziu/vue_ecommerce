@@ -27,21 +27,14 @@
       <span>{{ rightValue }}</span>
     </div>
   </div>
-  <div class="filter__overlay" v-if="isOpen" @click="toggleFilter"></div>
+  <div class="filter__overlay" v-if="ui.isOpen" @click="() => ui.toggleFilter"></div>
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/App.vue'
-import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useUIStore } from '@/stores/uiStore'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-
-const context = inject<IFilter>('appState')
-
-if (!context) {
-  throw new Error('appState not provided!')
-}
-
-const { isOpen, toggleFilter } = context
+const ui = useUIStore()
 
 const slider = ref<HTMLElement | null>(null)
 const leftThumb = ref(0)
