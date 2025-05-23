@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "serve": "bun run json-server --watch db.json",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",

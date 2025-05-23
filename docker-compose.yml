@@ -1,16 +1,27 @@
 services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+    depends_on:
+      - backend
+
   backend:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     env_file:
-      - .env
+      - ./server/.env
     depends_on:
       - postgres
     volumes:
-      - .:/app
+      - ./server:/app
 
   postgres:
     image: postgres:15
@@ -23,7 +34,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - .env
+      - ./server/.env
 
 volumes:
   postgres_data:
