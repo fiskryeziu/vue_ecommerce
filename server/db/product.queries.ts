@@ -1,5 +1,13 @@
+import type { Category } from "../types/user";
 import { pool } from "./db";
 
+export const queryProductsByCategory = async (category: Category) => {
+  const res = await pool.query(
+    `SELECT * FROM products WHERE category = $1 LIMIT 6`,
+    [category],
+  );
+  return res.rows;
+};
 export const getNewArrivalsProducts = async () => {
   const res = await pool.query(
     "SELECT * FROM products ORDER BY created_at DESC LIMIT 6;",

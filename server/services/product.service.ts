@@ -2,7 +2,13 @@ import {
   getBestSellerProduct,
   getFeaturedProducts,
   getNewArrivalsProducts,
+  queryProductsByCategory,
 } from "../db/product.queries";
+import type { Category } from "../types/user";
+
+export const fetchProductsByCategory = async (category: Category) => {
+  return await queryProductsByCategory(category);
+};
 
 export const fetchNewArrivalsProducts = async () => {
   return await getNewArrivalsProducts();

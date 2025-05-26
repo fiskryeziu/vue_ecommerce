@@ -3,3 +3,5 @@ export interface AuthPayload {
   iat?: number;
   exp?: number;
 }
+
+export type Category = "rings" | "charms-dangles" | "necklaces" | "bracelets";

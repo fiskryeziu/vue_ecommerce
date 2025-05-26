@@ -3,8 +3,21 @@ import {
   fetchBestSellerProduct,
   fetchFeaturedProducts,
   fetchNewArrivalsProducts,
+  fetchProductsByCategory,
 } from "../services/product.service";
+import type { Category } from "../types/user";
 
+export const getProductsByCategory = async (req: Request, res: Response) => {
+  const category = req.query.category as Category;
+  try {
+    const products = await fetchProductsByCategory(category);
+    res.json(products);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to get product from that category" });
+  }
+};
 export const getNewArrivals = async (req: Request, res: Response) => {
   try {
     const products = await fetchNewArrivalsProducts();
