@@ -5,7 +5,7 @@
     @mouseleave="isHovering[product.id] = false"
   >
     <div class="card__image-wrapper">
-      <img :src="product.imgSrc" alt="" />
+      <img :src="product.image" alt="" />
       <div
         class="card__buttons"
         :class="{ 'card__button--active': isHovering[product.id] || isMobileScreen }"
@@ -20,7 +20,7 @@
       <p class="card__title">{{ product.title }}</p>
       <div class="center">
         <p class="card__price">${{ product.price }}</p>
-        <p class="card__compareprice" v-if="product.comparePrice">${{ product.comparePrice }}</p>
+        <p class="card__compareprice" v-if="product.compareprice">${{ product.compareprice }}</p>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import type { Product } from './ProductsCarousel.vue'
 import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
+import type { Product } from '@/types'
 
 defineProps<{
   product: Product
@@ -63,10 +63,15 @@ onUnmounted(() => {
 
 .card__image-wrapper {
   position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
 }
 .card img {
-  padding-block: 1em;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .card__buttons {

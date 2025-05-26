@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { data } from '@/data'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import CardProduct from './CardProduct.vue'
+import { useProductsStore, type Feature } from '@/stores/productsStore'
+import type { Product } from '@/types'
 
-const items = ref(data)
-const categories = [
-  { id: 'new', name: 'New Arrivals' },
+const product = useProductsStore()
+
+const items = ref<Product[]>([])
+
+const categories: { id: Feature; name: string }[] = [
+  { id: 'new-arrivals', name: 'New Arrivals' },
   { id: 'featured', name: 'Featured' },
-  { id: 'best', name: 'Best Selllers' },
+  { id: 'best-sellers', name: 'Best Selllers' },
 ]
-const selectedCategory = ref(categories[0].id)
+const selectedCategory = ref<Feature>(categories[0].id)
 
-const fetchData = async () => {
-  // try {
-  //   const response = await fetch(`api-example/category=${selectedCategory.value}`);
-  //   const data = await response.json();
-  //   items.value = data;
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  // }
-  console.log('fetching...')
-}
+watch(selectedCategory, async () => {
+  await product.fetchProductsByCategory(selectedCategory.value)
+  items.value = product.productsByCategory[selectedCategory.value] ?? []
+})
 
-watch(selectedCategory, fetchData)
-
-fetchData()
+onMounted(async () => {
+  await product.fetchProductsByCategory(selectedCategory.value)
+  items.value = product.productsByCategory[selectedCategory.value] ?? []
+})
 </script>
 
 <template>
