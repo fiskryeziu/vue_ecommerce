@@ -17,13 +17,13 @@ const categories: { id: Feature; name: string }[] = [
 const selectedCategory = ref<Feature>(categories[0].id)
 
 watch(selectedCategory, async () => {
-  await product.fetchProductsByCategory(selectedCategory.value)
-  items.value = product.productsByCategory[selectedCategory.value] ?? []
+  await product.fetchProductsByCollection(selectedCategory.value)
+  items.value = product.productsByCollections[selectedCategory.value] ?? []
 })
 
 onMounted(async () => {
-  await product.fetchProductsByCategory(selectedCategory.value)
-  items.value = product.productsByCategory[selectedCategory.value] ?? []
+  await product.fetchProductsByCollection(selectedCategory.value)
+  items.value = product.productsByCollections[selectedCategory.value] ?? []
 })
 </script>
 

@@ -15,18 +15,21 @@ import Benefits from '@/components/Benefits.vue'
   <FeaturedProducts />
   <PromoBanner />
   <ProductsCarousel
-    category="Necklase"
-    title="New Earrings Arrival"
+    category="necklaces"
+    title="Necklase"
+    subtitle="New Earrings Arrival"
     featuredImage="/feature1.jpg"
   />
   <ProductsCarousel
-    category="Charm & Dangles"
-    title="Best Diamond Sets 2020"
+    category="charms-dangles"
+    title="Charm & Dangles"
+    subtitle="Best Diamond Sets 2020"
     featuredImage="/feature1.jpg"
   />
   <ProductsCarousel
-    category="Bracelets & Rings"
-    title="Diamond Bow Bracelets"
+    category="rings"
+    title="Bracelets & Rings"
+    subtitle="Diamond Bow Bracelets"
     featuredImage="/feature1.jpg"
   />
   <Brands />

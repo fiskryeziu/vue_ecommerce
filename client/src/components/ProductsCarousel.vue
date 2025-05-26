@@ -1,12 +1,12 @@
 <template>
-  <h1 class="heading">{{ category }}</h1>
+  <h1 class="heading">{{ title }}</h1>
   <div class="wrapper">
     <div class="feature">
       <div class="image-wrapper">
         <img :src="featuredImage" alt="feature-image" />
       </div>
       <div class="content-wrapper">
-        <h3>{{ title }}</h3>
+        <h3>{{ subtitle }}</h3>
         <a href="">Shop Now</a>
       </div>
     </div>
@@ -32,19 +32,25 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
 import CardProduct from './CardProduct.vue'
-import { data } from '@/data'
-import type { Product } from './RelatedProducts.vue'
+import type { Category, Product } from '@/types'
+import { useProductsStore } from '@/stores/productsStore'
 
-defineProps<{
-  category: string
+const prop = defineProps<{
+  category: Category
   title: string
+  subtitle: string
   featuredImage: string
-  products?: Product[]
 }>()
 
-const items = ref<Product[]>(data)
+const product = useProductsStore()
+
+const items: Ref<Product[]> = ref([])
+
+onMounted(async () => {
+  items.value = await product.fetchProductsByCategory(prop.category)
+})
 </script>
 
 <style scoped>
