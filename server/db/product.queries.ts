@@ -40,3 +40,17 @@ LIMIT
   );
   return res.rows;
 };
+export const queryProduct = async (slug: string) => {
+  const res = await pool.query(
+    `
+SELECT
+    *
+FROM
+    products
+WHERE
+    slug = $1
+`,
+    [slug],
+  );
+  return res.rows[0];
+};

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, type Ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import CardProduct from './CardProduct.vue'
-import { useProductsStore, type Feature } from '@/stores/productsStore'
-import type { Product } from '@/types'
+import { useProductsStore } from '@/stores/productsStore'
+import type { Feature, Product } from '@/types'
 
 const product = useProductsStore()
 
@@ -14,7 +14,7 @@ const categories: { id: Feature; name: string }[] = [
   { id: 'featured', name: 'Featured' },
   { id: 'best-sellers', name: 'Best Selllers' },
 ]
-const selectedCategory = ref<Feature>(categories[0].id)
+const selectedCategory: Ref<Feature> = ref(categories[0].id)
 
 watch(selectedCategory, async () => {
   await product.fetchProductsByCollection(selectedCategory.value)

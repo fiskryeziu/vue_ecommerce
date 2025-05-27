@@ -8,6 +8,11 @@ import Footer from './components/Footer.vue'
 <!--
 TODO:
 - [x] authentication with jwt(localstorage/cookies)
+- [] single product page dynamic (fetching from single product endpoint)
+- [] related product carousel in single product page fetch from db
+- [] add to cart, wishlist store with pinia, rm hardcoded data
+- [] server/client for product filter + pagination etc...
+- [] quick view modal, when clicking the search icon in product cart
 - [] payment gateway with stripe
 -->
 

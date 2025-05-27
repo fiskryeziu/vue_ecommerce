@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, type Ref } from 'vue'
+import { ref, onUnmounted, type Ref, watch } from 'vue'
 
 export function useInView(target: Ref<HTMLElement | null>, options = {}) {
   const isInView = ref(false)
@@ -11,17 +11,22 @@ export function useInView(target: Ref<HTMLElement | null>, options = {}) {
     isInView.value = entry.isIntersecting
   }
 
-  onMounted(() => {
-    if (target.value) {
-      observer = new IntersectionObserver(cb, options)
-
-      observer.observe(target.value)
-    }
-  })
+  const stopWatching = watch(
+    target,
+    (el) => {
+      if (observer) {
+        observer.disconnect()
+      }
+      if (el) {
+        observer = new IntersectionObserver(cb, options)
+        observer.observe(el)
+      }
+    },
+    { immediate: true },
+  )
   onUnmounted(() => {
-    if (target.value && observer) {
-      observer.unobserve(target.value)
-    }
+    if (observer) observer.disconnect()
+    stopWatching()
   })
 
   return { isInView }

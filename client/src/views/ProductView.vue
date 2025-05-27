@@ -1,20 +1,34 @@
 <template>
-  <Breadcrumb :items="links" />
+  <Breadcrumb :items="links" v-if="!error" />
   <!-- product img - product info -->
-  <main class="product">
+
+  <!-- TODO: leave as it is for the moment  -->
+  <p v-if="isLoading">Loading product...</p>
+  <p
+    v-else-if="error"
+    style="
+      text-align: center;
+      padding: 1em;
+      background-color: red;
+      margin-inline: 1em;
+      color: white;
+    "
+    class="error"
+  >
+    {{ error }}
+  </p>
+
+  <main class="product" v-if="product">
     <section class="product__img">
-      <img src="/products/earrings.jpg" alt="" />
+      <img :src="product.image" alt="" />
     </section>
     <section class="product__info">
-      <p class="product__title">Blue Stripes & Stone Earrings</p>
+      <p class="product__title">{{ product.title }}</p>
       <div class="row">
-        <Star v-for="n in 5" fill="#222222" :size="14" />
+        <Star v-for="n in product.rating" fill="#222222" :size="14" />
       </div>
-      <p class="product__price">$249.00</p>
-      <p class="product__desc">
-        This regulator has a rolled diaphragm and high flow rate with reduced pressure drop.It has
-        an excellent degree of condensation.
-      </p>
+      <p class="product__price">${{ product.price }}</p>
+      <p class="product__desc">{{ product.description }}</p>
       <p class="product__availability">Availability: <span style="color: green">In Stock</span></p>
       <div class="product__buy">
         <div class="product__add-cart">
@@ -56,7 +70,6 @@
           <p>30 Days <br />Return</p>
         </article>
       </section>
-      <!-- related products -->
       <section class="product__related-product"></section>
     </section>
   </main>
@@ -66,9 +79,9 @@
         <img src="/products/earrings.jpg" alt="" />
       </div>
       <div class="col gap-1">
-        <p style="">Blue Stripes & Stone Earrings</p>
+        <p style="">{{ product?.title }}</p>
         <div class="row">
-          <Star v-for="n in 5" fill="#222222" :size="14" />
+          <Star v-for="n in product?.rating" fill="#222222" :size="14" />
         </div>
 
         <p>$249.00</p>
@@ -99,8 +112,10 @@
 import Breadcrumb from '@/components/Breadcrumb.vue'
 import RelatedProducts from '@/components/RelatedProducts.vue'
 import { useInView } from '@/composables/useInView'
+import type { Product } from '@/types'
 import { Clock, Handshake, Heart, RotateCcw, ShieldCheck, Star, Truck } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 // TODO: where the label is earrings
 //      the value will change based
@@ -113,11 +128,15 @@ const links = [
   { label: 'current product test', link: '' },
 ]
 
+const route = useRoute()
+const slug = route.params.slug as string
+const product = ref<Product | null>(null)
+const isLoading = ref(true)
+const error = ref(null)
+
 const qty = ref(1)
 const targetRef = ref<HTMLElement | null>(null)
 const { isInView } = useInView(targetRef)
-
-console.log(isInView.value)
 
 const dec = () => {
   if (qty.value === 1) {
@@ -131,6 +150,29 @@ const inc = () => {
   }
   qty.value++
 }
+async function fetchProduct(slug: string) {
+  try {
+    isLoading.value = true
+    const res = await fetch(`http://localhost:3000/api/products/${slug}`)
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null)
+      const message = errorData?.message || `Failed to fetch product: ${res.status}`
+      throw new Error(message)
+    }
+
+    product.value = await res.json()
+  } catch (err: any) {
+    error.value = err.message || 'Unknown error'
+    product.value = null
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchProduct(slug)
+})
 </script>
 
 <style scoped>
@@ -268,6 +310,7 @@ const inc = () => {
   bottom: 0;
   left: 0;
   display: none;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
