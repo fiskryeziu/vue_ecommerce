@@ -23,9 +23,10 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { data } from '@/data'
 import ShopCard from './ShopCard.vue'
+import { useRoute } from 'vue-router'
 
 export type Product = {
   id: number
@@ -44,6 +45,30 @@ defineProps<{
 }>()
 
 const items = ref<Product[]>(data)
+
+const route = useRoute()
+const slug = route.params.slug as string
+
+async function fetchProduct(slug: string) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/products/related/${slug}`)
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null)
+      const message = errorData?.message || `Failed to fetch product: ${res.status}`
+      throw new Error(message)
+    }
+
+    items.value = await res.json()
+  } catch (err: any) {
+    let msg = err.message || 'Unknown error'
+    console.log(msg)
+  }
+}
+
+onMounted(() => {
+  fetchProduct(slug)
+})
 </script>
 
 <style scoped>

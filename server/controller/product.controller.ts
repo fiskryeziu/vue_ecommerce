@@ -5,6 +5,7 @@ import {
   fetchNewArrivalsProducts,
   fetchProduct,
   fetchProductsByCategory,
+  fetchRelatedProducts,
 } from "../services/product.service";
 import type { Category } from "../types/user";
 
@@ -56,5 +57,19 @@ export const getProduct = async (req: Request, res: Response) => {
     res.json(product);
   } catch (error) {
     res.status(500).json({ message: "Failed to get the product" });
+  }
+};
+export const getRelatedProducts = async (req: Request, res: Response) => {
+  const slug = req.params.slug as string;
+  try {
+    const product = await fetchRelatedProducts(slug);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to get the product related products" });
   }
 };

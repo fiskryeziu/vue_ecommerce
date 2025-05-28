@@ -54,3 +54,27 @@ WHERE
   );
   return res.rows[0];
 };
+export const queryRelatedProducts = async (slug: string) => {
+  const res = await pool.query(
+    `
+SELECT
+    *
+FROM
+    products
+WHERE
+    category = (
+        SELECT
+            category
+        FROM
+            products
+        WHERE
+            slug = $1
+    )
+    AND slug != $1
+LIMIT
+    6;
+`,
+    [slug],
+  );
+  return res.rows;
+};

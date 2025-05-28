@@ -183,6 +183,7 @@ onMounted(() => {
 .product__img {
   display: flex;
   flex-basis: 50%;
+  aspect-ratio: 1;
 }
 
 .product__img img {

@@ -1,35 +1,38 @@
 <template>
-  <div
-    class="card"
-    @mouseenter="isHovering[product.id] = true"
-    @mouseleave="isHovering[product.id] = false"
-  >
-    <div class="card__image-wrapper">
-      <img :src="product.image" alt="" />
-      <div
-        class="card__buttons"
-        :class="{ 'card__button--active': isHovering[product.id] || isMobileScreen }"
-      >
-        <ShoppingCart :strokeWidth="2" :size="20" />
-        <Heart :strokeWidth="2" :size="20" />
-        <Search :strokeWidth="2" :size="20" />
+  <RouterLink :to="`/product/${product.slug}`">
+    <div
+      class="card"
+      @mouseenter="isHovering[product.id] = true"
+      @mouseleave="isHovering[product.id] = false"
+    >
+      <div class="card__image-wrapper">
+        <img :src="product.image" alt="" />
+        <div
+          class="card__buttons"
+          :class="{ 'card__button--active': isHovering[product.id] || isMobileScreen }"
+        >
+          <ShoppingCart :strokeWidth="2" :size="20" />
+          <Heart :strokeWidth="2" :size="20" />
+          <Search :strokeWidth="2" :size="20" />
+        </div>
+      </div>
+      <div class="card__info">
+        <p class="card__category">{{ product.category }}</p>
+        <p class="card__title">{{ product.title }}</p>
+        <div class="center">
+          <p class="card__price">${{ product.price }}</p>
+          <p class="card__compareprice" v-if="product.compareprice">${{ product.compareprice }}</p>
+        </div>
       </div>
     </div>
-    <div class="card__info">
-      <p class="card__category">{{ product.category }}</p>
-      <p class="card__title">{{ product.title }}</p>
-      <div class="center">
-        <p class="card__price">${{ product.price }}</p>
-        <p class="card__compareprice" v-if="product.compareprice">${{ product.compareprice }}</p>
-      </div>
-    </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
 import type { Product } from '@/types'
+import { RouterLink } from 'vue-router'
 
 defineProps<{
   product: Product

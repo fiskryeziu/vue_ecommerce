@@ -24,6 +24,7 @@ defineProps<{
 <style scoped>
 .breadcrumb {
   display: flex;
+  flex-wrap: wrap;
   padding-inline: 2em;
 }
 
