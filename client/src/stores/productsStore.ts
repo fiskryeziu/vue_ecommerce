@@ -1,6 +1,7 @@
-import type { Category, Feature, Product } from '@/types'
+import type { Category, Feature, Product, TProducts } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 export const useProductsStore = defineStore('products', () => {
   const productsByCollections: Ref<Record<Feature, Product[]>> = ref({
@@ -8,6 +9,7 @@ export const useProductsStore = defineStore('products', () => {
     featured: [],
     'best-sellers': [],
   })
+  const route = useRoute()
 
   const fetchProductsByCollection = async (collection: Feature): Promise<void> => {
     if (productsByCollections.value[collection].length > 0) return
@@ -48,9 +50,33 @@ export const useProductsStore = defineStore('products', () => {
     }
   }
 
+  const getProducts = async (page = 1) => {
+    try {
+      const params = new URLSearchParams(route.query as Record<string, string>)
+      params.set('page', String(page))
+
+      const response = await fetch(`http://localhost:3000/api/products?${params.toString()}`)
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data: TProducts = await response.json()
+      return data
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error fetching products:', error.message)
+      } else {
+        console.error('An unknown error occurred:', error)
+      }
+      throw error
+    }
+  }
+
   return {
     productsByCollections,
     fetchProductsByCollection,
     fetchProductsByCategory,
+    getProducts,
   }
 })

@@ -1,6 +1,72 @@
 import type { Category } from "../types/user";
 import { pool } from "./db";
 
+export const queryProducts = async (filters: {
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  page?: number;
+  limit?: number;
+}) => {
+  const values: (string | number)[] = [];
+  const conditions: string[] = [];
+
+  if (filters.category) {
+    values.push(filters.category);
+    conditions.push(`category = $${values.length}`);
+  }
+
+  if (filters.minPrice !== undefined) {
+    values.push(filters.minPrice);
+    conditions.push(`price >= $${values.length}`);
+  }
+
+  if (filters.maxPrice !== undefined) {
+    values.push(filters.maxPrice);
+    conditions.push(`price <= $${values.length}`);
+  }
+
+  const whereClause = conditions.length
+    ? `WHERE ${conditions.join(" AND ")}`
+    : "";
+
+  const limit = filters.limit || 10;
+  const page = filters.page || 1;
+  const offset = (page - 1) * limit;
+
+  values.push(limit);
+  const limitPlaceholder = `$${values.length}`;
+
+  values.push(offset);
+  const offsetPlaceholder = `$${values.length}`;
+
+  const productQuery = `
+    SELECT * FROM products 
+    ${whereClause}
+    ORDER BY id DESC
+    LIMIT ${limitPlaceholder}
+    OFFSET ${offsetPlaceholder}
+  `;
+
+  const countQuery = `
+    SELECT COUNT(*) FROM products
+    ${whereClause}
+  `;
+
+  // Only use the filter values for the count query
+  const countValues = values.slice(0, values.length - 2);
+
+  const [productsResult, countResult] = await Promise.all([
+    pool.query(productQuery, values),
+    pool.query(countQuery, countValues),
+  ]);
+
+  return {
+    products: productsResult.rows,
+    totalProducts: parseInt(countResult.rows[0].count, 10),
+  };
+};
+
 export const queryProductsByCategory = async (category: Category) => {
   const res = await pool.query(
     `SELECT * FROM products WHERE category = $1 LIMIT 6`,

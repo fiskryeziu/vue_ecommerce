@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 
 export const useUIStore = defineStore('ui', () => {
-  const isOpen: Ref<boolean> = ref(false)
-  const isOpenLoginModal: Ref<boolean> = ref(false)
-  const isOpenCart: Ref<boolean> = ref(false)
+  const isOpen = ref(false)
+  const isOpenLoginModal = ref(false)
+  const isOpenCart = ref(false)
 
   const toggleFilter = computed(() => {
     isOpen.value = !isOpen.value

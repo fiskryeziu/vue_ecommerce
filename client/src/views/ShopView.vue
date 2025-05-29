@@ -8,12 +8,12 @@
         <section class="filter__category">
           <h2>Categories</h2>
           <ul>
-            <li><button @click="addParam('categories', 'necklases')">Necklases</button></li>
+            <li><button @click="addParam('categories', 'necklaces')">Necklases</button></li>
             <li><button @click="addParam('categories', 'rings')">Rings</button></li>
             <li><button @click="addParam('categories', 'bracelets')">Bracelets</button></li>
             <li><button @click="addParam('categories', 'earrings')">Earrings</button></li>
             <li>
-              <button @click="addParam('categories', 'charm&dangles')">Charm & Dangles</button>
+              <button @click="addParam('categories', 'charms-dangles')">Charm & Dangles</button>
             </li>
           </ul>
         </section>
@@ -23,7 +23,7 @@
         </section>
       </div>
     </aside>
-    <div class="filter__overlay" v-if="ui.isOpen" @click="ui.toggleFilter"></div>
+    <div class="filter__overlay" v-if="ui.isOpen" @click="() => ui.toggleFilter"></div>
     <main>
       <div class="shop__sort">
         <p>1–12 Products of 34 Products</p>
@@ -45,6 +45,20 @@
           <ShopCard :product="item" />
         </div>
       </section>
+      <nav class="pagination" v-if="totalPages > 1">
+        <button :disabled="currentPage === 1" @click="currentPage--">Prev</button>
+
+        <button
+          v-for="page in generatePagination(currentPage, totalPages)"
+          :key="page"
+          @click="() => typeof page === 'number' && (currentPage = page)"
+          :class="{ active: page === currentPage }"
+        >
+          {{ page }}
+        </button>
+
+        <button :disabled="currentPage === totalPages" @click="currentPage++">Next</button>
+      </nav>
     </main>
   </div>
 </template>
@@ -52,16 +66,23 @@
 <script setup lang="ts">
 import RangeSlider from '@/components/RangeSlider.vue'
 import ShopCard from '@/components/ShopCard.vue'
-import { data } from '@/data'
+import { useProductsStore } from '@/stores/productsStore'
 import { useUIStore } from '@/stores/uiStore'
+import type { Product } from '@/types'
+import { generatePagination } from '@/utils'
 import { Grid2x2, Grid3x3 } from 'lucide-vue-next'
-import { ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, type Ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
+const products = useProductsStore()
 
-const items = ref(data)
+const items: Ref<Product[]> = ref([])
+
+const currentPage = ref(1)
+const totalPages = ref(1)
+const pagination = computed(() => generatePagination(currentPage.value, totalPages.value))
 
 const gridCol = ref(3)
 
@@ -95,6 +116,26 @@ watch(
     }
   },
 )
+const fetchProducts = async () => {
+  const { products: data, totalPages: pages } = await products.getProducts(currentPage.value)
+  items.value = data
+  totalPages.value = pages
+}
+watch(
+  () => route.query,
+  async () => {
+    currentPage.value = 1
+    await fetchProducts()
+  },
+)
+
+watch(currentPage, async () => {
+  await fetchProducts()
+})
+
+onMounted(async () => {
+  await fetchProducts()
+})
 </script>
 
 <style scoped>
@@ -244,5 +285,48 @@ watch(
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 2;
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  background-color: white;
+  border: 1px solid var(--border-color, #ddd);
+  color: var(--text-color, #333);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  min-width: 40px;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--primary-light, #f0f0f0);
+}
+
+.pagination button.active {
+  background-color: var(--primary, #333);
+  color: white;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button.ellipsis {
+  cursor: default;
+  pointer-events: none;
+  background: transparent;
+  border: none;
 }
 </style>

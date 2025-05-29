@@ -4,12 +4,14 @@ import {
   getFeatured,
   getNewArrivals,
   getProduct,
+  getProducts,
   getProductsByCategory,
   getRelatedProducts,
 } from "../controller/product.controller";
 
 const router = Router();
 
+router.get("/", getProducts);
 router.get("/new-arrivals", getNewArrivals);
 router.get("/categories", getProductsByCategory);
 router.get("/featured", getFeatured);

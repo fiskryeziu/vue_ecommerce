@@ -4,11 +4,35 @@ import {
   fetchFeaturedProducts,
   fetchNewArrivalsProducts,
   fetchProduct,
+  fetchProducts,
   fetchProductsByCategory,
   fetchRelatedProducts,
 } from "../services/product.service";
 import type { Category } from "../types/user";
 
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const { categories, min_price, max_price, page } = req.query;
+
+    const filters = {
+      category: categories as string | undefined,
+      minPrice: min_price ? parseFloat(min_price as string) : undefined,
+      maxPrice: max_price ? parseFloat(max_price as string) : undefined,
+      page: page ? parseInt(page as string) : 1,
+      limit: 5,
+    };
+
+    const { products, totalProducts } = await fetchProducts(filters);
+    const totalPages = Math.ceil(totalProducts / 5);
+
+    res.json({ products, totalPages });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Failed to get products from that category" });
+  }
+};
 export const getProductsByCategory = async (req: Request, res: Response) => {
   const category = req.query.category as Category;
   try {

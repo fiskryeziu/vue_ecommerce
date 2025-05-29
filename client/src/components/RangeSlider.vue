@@ -67,7 +67,7 @@ const queryFilter = () => {
   }
 
   router.push({ query: current })
-  toggleFilter()
+  ui.toggleFilter
 }
 
 const getValueFromPx = (px: number): number => {
