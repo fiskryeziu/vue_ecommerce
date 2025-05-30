@@ -28,13 +28,12 @@
       <div class="shop__sort">
         <p>1–12 Products of 34 Products</p>
         <div class="shop__sort-select">
-          <b>Sort by</b>
-          <select>
-            <option value="">Default sorting</option>
-            <option value="">Sort by popularity</option>
-            <option value="">Sort by latest</option>
-            <option value="">Sort by price: low to high</option>
-            <option value="">Sort by price: high to low</option>
+          <b>Sort by </b>
+          <select v-model="sort">
+            <option value="">default sorting</option>
+            <option value="latest">latest</option>
+            <option value="low">price: low to high</option>
+            <option value="high">price: high to low</option>
           </select>
           <Grid2x2 :strokeWidth="1" :aria-active="gridCol === 2" @click="changeCol(2)" />
           <Grid3x3 :strokeWidth="1" :aria-active="gridCol === 3" @click="changeCol(3)" />
@@ -49,7 +48,7 @@
         <button :disabled="currentPage === 1" @click="currentPage--">Prev</button>
 
         <button
-          v-for="page in generatePagination(currentPage, totalPages)"
+          v-for="page in pagination"
           :key="page"
           @click="() => typeof page === 'number' && (currentPage = page)"
           :class="{ active: page === currentPage }"
@@ -83,6 +82,7 @@ const items: Ref<Product[]> = ref([])
 const currentPage = ref(1)
 const totalPages = ref(1)
 const pagination = computed(() => generatePagination(currentPage.value, totalPages.value))
+const sort = ref('')
 
 const gridCol = ref(3)
 
@@ -102,7 +102,6 @@ const addParam = (key: string, value: string) => {
   }
 
   router.push({ query: current })
-  ui.toggleFilter
 }
 
 watch(
@@ -131,6 +130,10 @@ watch(
 
 watch(currentPage, async () => {
   await fetchProducts()
+})
+
+watch(sort, (newVal) => {
+  addParam('sort', newVal)
 })
 
 onMounted(async () => {
@@ -203,10 +206,6 @@ onMounted(async () => {
 .shop__sort-select {
   display: flex;
   gap: 1em;
-}
-
-.shop__sort select {
-  width: 50%;
 }
 
 .shop__products {

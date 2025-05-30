@@ -12,13 +12,14 @@ import type { Category } from "../types/user";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { categories, min_price, max_price, page } = req.query;
+    const { categories, min_price, max_price, page, sort } = req.query;
 
     const filters = {
       category: categories as string | undefined,
       minPrice: min_price ? parseFloat(min_price as string) : undefined,
       maxPrice: max_price ? parseFloat(max_price as string) : undefined,
       page: page ? parseInt(page as string) : 1,
+      sort: sort ? (sort as "low" | "high" | "latest") : undefined,
       limit: 5,
     };
 

@@ -7,6 +7,7 @@ export const queryProducts = async (filters: {
   maxPrice?: number;
   page?: number;
   limit?: number;
+  sort?: "latest" | "low" | "high" | undefined;
 }) => {
   const values: (string | number)[] = [];
   const conditions: string[] = [];
@@ -30,6 +31,23 @@ export const queryProducts = async (filters: {
     ? `WHERE ${conditions.join(" AND ")}`
     : "";
 
+  // sorting
+  let orderClause = "ORDER BY id DESC";
+  switch (filters.sort) {
+    case "low":
+      orderClause = "ORDER BY price ASC";
+      break;
+    case "high":
+      orderClause = "ORDER BY price DESC";
+      break;
+    case "latest":
+      orderClause = "ORDER BY created_at DESC";
+      break;
+    default:
+      break;
+  }
+
+  // pagination
   const limit = filters.limit || 10;
   const page = filters.page || 1;
   const offset = (page - 1) * limit;
@@ -43,7 +61,7 @@ export const queryProducts = async (filters: {
   const productQuery = `
     SELECT * FROM products 
     ${whereClause}
-    ORDER BY id DESC
+    ${orderClause}
     LIMIT ${limitPlaceholder}
     OFFSET ${offsetPlaceholder}
   `;

@@ -15,6 +15,7 @@ export const fetchProducts = async (filters: {
   maxPrice?: number;
   page?: number;
   limit?: number;
+  sort?: "latest" | "low" | "high" | undefined;
 }) => {
   return await queryProducts(filters);
 };
