@@ -27,7 +27,7 @@
       <span>{{ rightValue }}</span>
     </div>
   </div>
-  <div class="filter__overlay" v-if="ui.isOpen" @click="() => ui.toggleFilter"></div>
+  <div class="filter__overlay" v-if="ui.isOpen" @click="ui.toggleFilter"></div>
 </template>
 
 <script setup lang="ts">
@@ -67,7 +67,9 @@ const queryFilter = () => {
   }
 
   router.push({ query: current })
-  ui.toggleFilter
+  if (window.innerWidth < 768) {
+    ui.toggleFilter
+  }
 }
 
 const getValueFromPx = (px: number): number => {

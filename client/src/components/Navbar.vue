@@ -15,7 +15,7 @@
         <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
           <div class="icon" v-if="showLoginIcon">
-            <User :strokeWidth="1" @click="() => ui.toggleLoginModal" />
+            <User :strokeWidth="1" @click="ui.toggleLoginModal" />
           </div>
           <!-- NOTE: the data count attr static for now. -->
           <div class="icon" data-count="2">
@@ -24,7 +24,7 @@
             </RouterLink>
           </div>
           <div class="icon" data-count="1">
-            <ShoppingCart :strokeWidth="1" @click="() => ui.toggleCart" />
+            <ShoppingCart :strokeWidth="1" @click="ui.toggleCart" />
           </div>
         </div>
       </div>
@@ -38,8 +38,8 @@
     </div>
   </nav>
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
-  <LoginModal :open="ui.isOpenLoginModal" @toggle="() => ui.toggleLoginModal" />
-  <AddCart :open="ui.isOpenCart" @toggle="() => ui.toggleCart" />
+  <LoginModal :open="ui.isOpenLoginModal" @toggle="ui.toggleLoginModal" />
+  <AddCart :open="ui.isOpenCart" @toggle="ui.toggleCart" />
 </template>
 
 <script setup lang="ts">

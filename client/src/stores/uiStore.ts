@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
-import { computed, ref, type Ref } from 'vue'
+import { ref } from 'vue'
 
 export const useUIStore = defineStore('ui', () => {
   const isOpen = ref(false)
   const isOpenLoginModal = ref(false)
   const isOpenCart = ref(false)
 
-  const toggleFilter = computed(() => {
+  const toggleFilter = () => {
     isOpen.value = !isOpen.value
-  })
+  }
 
-  const toggleLoginModal = computed(() => {
+  const toggleLoginModal = () => {
     isOpenLoginModal.value = !isOpenLoginModal.value
-  })
+  }
 
-  const toggleCart = computed(() => {
+  const toggleCart = () => {
     isOpenCart.value = !isOpenCart.value
-  })
+  }
 
   return { isOpen, isOpenLoginModal, isOpenCart, toggleFilter, toggleLoginModal, toggleCart }
 })

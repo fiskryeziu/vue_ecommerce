@@ -5,7 +5,7 @@
       <p class="text-xs uppercase">Home</p>
     </RouterLink>
     <div class="bottom-nav__filter col center" v-if="route.name === 'shop'">
-      <SlidersHorizontal style="color: var(--secondary)" @click="() => ui.toggleFilter" />
+      <SlidersHorizontal style="color: var(--secondary)" @click="ui.toggleFilter" />
       <p class="text-xs uppercase">Filter</p>
     </div>
     <div class="col center">

@@ -23,7 +23,7 @@
         </section>
       </div>
     </aside>
-    <div class="filter__overlay" v-if="ui.isOpen" @click="() => ui.toggleFilter"></div>
+    <div class="filter__overlay" v-if="ui.isOpen" @click="ui.toggleFilter"></div>
     <main>
       <div class="shop__sort">
         <p>1–12 Products of 34 Products</p>
