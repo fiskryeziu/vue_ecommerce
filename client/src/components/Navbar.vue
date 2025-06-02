@@ -23,7 +23,7 @@
               <Heart :strokeWidth="1" />
             </RouterLink>
           </div>
-          <div class="icon" data-count="1">
+          <div class="icon" :data-count="cart.itemCount">
             <ShoppingCart :strokeWidth="1" @click="ui.toggleCart" />
           </div>
         </div>
@@ -51,9 +51,11 @@ import LoginModal from './LoginModal.vue'
 import AddCart from './AddCart.vue'
 import { useUserStore } from '@/stores/userStore'
 import { useUIStore } from '@/stores/uiStore'
+import { useCartStore } from '@/stores/cartStore'
 
 const user = useUserStore()
 const ui = useUIStore()
+const cart = useCartStore()
 
 const showLoginIcon = computed(() => !user.isAuthed)
 

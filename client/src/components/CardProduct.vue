@@ -11,7 +11,7 @@
           class="card__buttons"
           :class="{ 'card__button--active': isHovering[product.id] || isMobileScreen }"
         >
-          <ShoppingCart :strokeWidth="2" :size="20" />
+          <ShoppingCart :strokeWidth="2" :size="20" @click="(e) => addCartHandler(product, e)" />
           <Heart :strokeWidth="2" :size="20" />
           <Search :strokeWidth="2" :size="20" />
         </div>
@@ -30,18 +30,31 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
+import { CloudCog, Heart, Search, ShoppingCart } from 'lucide-vue-next'
 import type { Product } from '@/types'
 import { RouterLink } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
+import { useUIStore } from '@/stores/uiStore'
 
 defineProps<{
   product: Product
 }>()
 
+const cart = useCartStore()
+const ui = useUIStore()
+
 const isHovering = ref<Record<number, boolean>>({})
 const width = ref(window.innerWidth)
 
 const isMobileScreen = computed(() => width.value < 768)
+
+const addCartHandler = (product: Product, e: MouseEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+
+  cart.addItem(product)
+  ui.toggleCart()
+}
 
 const updateWidth = () => {
   width.value = window.innerWidth

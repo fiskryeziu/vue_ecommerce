@@ -39,7 +39,9 @@
               <button @click="inc()">+</button>
             </div>
           </div>
-          <button class="product__cart center" ref="targetRef">ADD TO CART</button>
+          <button class="product__cart center" ref="targetRef" @click="cart.addItem(product, qty)">
+            ADD TO CART
+          </button>
         </div>
         <button class="product__buy-now center">BUY IT NOW</button>
       </div>
@@ -97,11 +99,13 @@
         </div>
       </div>
       <!-- TODO: in this button below will be placed the ref to track if its in view -->
-      <button class="product__cart center">ADD TO CART</button>
+      <button class="product__cart center" @click="product && cart.addItem(product, qty)">
+        ADD TO CART
+      </button>
     </div>
   </section>
   <section class="mobile__cart">
-    <button class="center">add to cart</button>
+    <button class="center" @click="product && cart.addItem(product, qty)">add to cart</button>
     <button class="center">buy it now</button>
   </section>
 
@@ -112,6 +116,7 @@
 import Breadcrumb from '@/components/Breadcrumb.vue'
 import RelatedProducts from '@/components/RelatedProducts.vue'
 import { useInView } from '@/composables/useInView'
+import { useCartStore } from '@/stores/cartStore'
 import type { Product } from '@/types'
 import { Clock, Handshake, Heart, RotateCcw, ShieldCheck, Star, Truck } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
@@ -127,6 +132,8 @@ const links = [
   { label: 'Earrings', link: '/shop?categories=earrings' },
   { label: 'current product test', link: '' },
 ]
+
+const cart = useCartStore()
 
 const route = useRoute()
 const slug = route.params.slug as string

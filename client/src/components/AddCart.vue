@@ -1,11 +1,11 @@
 <template>
   <aside class="addcart" :class="{ 'addcart-active': open }">
     <div class="addcart__heading">
-      <h3>Your Cart ({{ 2 }})</h3>
+      <h3>Your Cart ({{ cart.itemCount }})</h3>
       <p @click="emit('toggle')">Close</p>
     </div>
 
-    <div class="addcart__main" v-if="true">
+    <div class="addcart__main" v-if="cart.itemCount > 0">
       <div class="addcart__items">
         <div
           ref="scrollContent"
@@ -14,29 +14,31 @@
           @mouseenter="isHovering(true)"
           @mouseleave="isHovering(false)"
         >
-          <div v-for="i in 10" :key="i" class="addcart__item">
+          <div v-for="item in cart.items" :key="item.id" class="addcart__item">
             <div class="item__img">
-              <img src="/products/earrings.jpg" alt="" />
+              <img :src="item.image" alt="" />
             </div>
             <div class="item__info">
-              <p class="item__title">Blue Stripes & Stone Earrings</p>
+              <p class="item__title">{{ item.title }}</p>
               <div class="quantity-wrapper">
                 <div class="quantity">
-                  <!-- NOTE: we'll use the context in the future for the qty in addcart.vue -->
+                  <!-- TODO: since for now we'll use a hardcoded quantity in cartStore.
+                            we'll do a increament and decrement of quantity based on the id of product
+                    -->
                   <button>−</button>
-                  <input type="number" :value="2" min="1" max="99" />
+                  <input type="number" :value="item.quantity" min="1" max="99" />
                   <button>+</button>
                 </div>
               </div>
               <div class="item__qty row gap">
                 <!--TODO: qty X price -->
-                <p>4</p>
+                <p>{{ item.quantity }}</p>
                 <p>x</p>
-                <span>$249.00</span>
+                <span>${{ cart.totalPrice }}</span>
               </div>
             </div>
             <div class="item__remove">
-              <XCircle :strokeWidth="1" />
+              <XCircle :strokeWidth="1" @click="cart.removeItem(item.id)" />
             </div>
           </div>
         </div>
@@ -54,7 +56,7 @@
       <div class="addcart__buttons">
         <div>
           <p>Subtotal:</p>
-          <span>$815.00</span>
+          <span>${{ cart.totalPrice }}</span>
         </div>
         <button class="outline">View Cart</button>
         <button>Checkout</button>
@@ -74,9 +76,12 @@
 <script setup lang="ts">
 import { ShoppingCart, XCircle } from 'lucide-vue-next'
 import { ref, onMounted } from 'vue'
+import { useCartStore } from '@/stores/cartStore'
 
 defineProps({ open: Boolean })
 const emit = defineEmits(['toggle'])
+
+const cart = useCartStore()
 
 const hovering = ref(false)
 const scrollContent = ref<HTMLElement | null>(null)
