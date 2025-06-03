@@ -39,7 +39,11 @@
               <button @click="inc()">+</button>
             </div>
           </div>
-          <button class="product__cart center" ref="targetRef" @click="cart.addItem(product, qty)">
+          <button
+            class="product__cart center"
+            ref="targetRef"
+            @click="addCartHandler(product, qty)"
+          >
             ADD TO CART
           </button>
         </div>
@@ -99,13 +103,13 @@
         </div>
       </div>
       <!-- TODO: in this button below will be placed the ref to track if its in view -->
-      <button class="product__cart center" @click="product && cart.addItem(product, qty)">
+      <button class="product__cart center" @click="product && addCartHandler(product, qty)">
         ADD TO CART
       </button>
     </div>
   </section>
   <section class="mobile__cart">
-    <button class="center" @click="product && cart.addItem(product, qty)">add to cart</button>
+    <button class="center" @click="product && addCartHandler(product, qty)">add to cart</button>
     <button class="center">buy it now</button>
   </section>
 
@@ -117,6 +121,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue'
 import RelatedProducts from '@/components/RelatedProducts.vue'
 import { useInView } from '@/composables/useInView'
 import { useCartStore } from '@/stores/cartStore'
+import { useUIStore } from '@/stores/uiStore'
 import type { Product } from '@/types'
 import { Clock, Handshake, Heart, RotateCcw, ShieldCheck, Star, Truck } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
@@ -134,6 +139,7 @@ const links = [
 ]
 
 const cart = useCartStore()
+const ui = useUIStore()
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -156,6 +162,12 @@ const inc = () => {
     return
   }
   qty.value++
+}
+
+const addCartHandler = (product: Product, qty: number) => {
+  cart.addItem(product, qty)
+
+  ui.toggleCart()
 }
 async function fetchProduct(slug: string) {
   try {
