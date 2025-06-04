@@ -16,20 +16,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="length > 0">
-            <!-- TODO: remove from cart -->
-            <td><XCircle /></td>
-            <td><img src="/products/earrings.jpg" alt="" /></td>
+          <tr v-if="cart.itemCount" v-for="item in cart.items" :key="item.id">
+            <td><XCircle @click="cart.removeItem(item.id)" /></td>
+            <td><img :src="item.image" alt="" /></td>
             <td class="cart__title">
-              <RouterLink to="/product/1">Blue Stripes & Stone Earrings</RouterLink>
+              <RouterLink :to="`/product/${item.slug}`">{{ item.title }}</RouterLink>
             </td>
-            <td class="cart__price">$249.00</td>
+            <td class="cart__price">${{ item.compareprice ?? item.price }}</td>
             <td>
               <div class="quantity">
-                <!-- NOTE: we'll use the context in the future for the qty in addcart.vue -->
-                <button>−</button>
-                <input type="number" :value="2" min="1" max="99" />
-                <button>+</button>
+                <!-- TODO: increment or decreate the quantity -->
+                <button @click="cart.decreaseQty(item.id)">−</button>
+                <input
+                  type="number"
+                  :value="item.quantity"
+                  min="1"
+                  max="99"
+                  @input="onQuantityChange($event, item.id)"
+                />
+                <button @click="cart.increaseQty(item.id)">+</button>
               </div>
             </td>
           </tr>
@@ -40,28 +45,34 @@
       </table>
       <!--  768-px -->
 
-      <section v-if="length > 0">
+      <section v-if="cart.itemCount" v-for="item in cart.items" :key="item.id">
         <div class="cart__img">
-          <img src="/products/earrings.jpg" alt="" />
+          <img :src="item.image" alt="" />
         </div>
         <div class="cart__info">
           <div>
-            <p>Circle of Light Heart Earrings</p>
-            <XCircle />
+            <p>{{ item.title }}</p>
+            <XCircle @click="cart.removeItem(item.id)" />
           </div>
           <div>
             <span>Quantity</span>
             <div>
               <div class="quantity">
-                <button>−</button>
-                <input type="number" :value="2" min="1" max="99" />
-                <button>+</button>
+                <button @click="cart.decreaseQty(item.id)">−</button>
+                <input
+                  type="number"
+                  :value="item.quantity"
+                  min="1"
+                  max="99"
+                  @input="onQuantityChange($event, item.id)"
+                />
+                <button @click="cart.increaseQty(item.id)">+</button>
               </div>
             </div>
           </div>
           <div>
             <span>Price:</span>
-            <p class="cart__price left">$249</p>
+            <p class="cart__price left">${{ item.compareprice ?? item.price }}</p>
           </div>
         </div>
       </section>
@@ -69,7 +80,7 @@
         <h2>Cart Totals</h2>
         <div>
           <p>Total</p>
-          <p class="cart__price">$400.00</p>
+          <p class="cart__price">${{ cart.totalPrice }}</p>
         </div>
         <button>Proceed to checkout</button>
       </section>
@@ -78,17 +89,17 @@
 </template>
 
 <script setup lang="ts">
+import { useCartStore } from '@/stores/cartStore'
 import Breadcrumb from '../components/Breadcrumb.vue'
 import { XCircle } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
+import { onQuantityChange } from '@/utils'
 
 const links = [
   { label: 'Home', link: '/' },
   { label: 'Cart', link: '' },
 ]
-
-// mock cart product length
-const length = 1
+const cart = useCartStore()
 </script>
 
 <style scoped>
@@ -235,7 +246,7 @@ section {
   background-color: var(--primary);
   padding-block: 1em;
   color: var(--background);
-  z-index: 4;
+  z-index: 2;
 }
 
 @media screen and (min-width: 1024px) {

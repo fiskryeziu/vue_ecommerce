@@ -1,3 +1,5 @@
+import { useCartStore } from '@/stores/cartStore'
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -11,4 +13,13 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   }
 
   return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
+}
+
+export function onQuantityChange(event: Event, productId: number) {
+  const cart = useCartStore()
+  const target = event.target as HTMLInputElement
+  const newQuantity = Number(target.value)
+  if (!isNaN(newQuantity)) {
+    cart.updateQuantity(productId, newQuantity)
+  }
 }

@@ -12,7 +12,14 @@
           :class="{ 'card__button--active': isHovering[product.id] || isMobileScreen }"
         >
           <ShoppingCart :strokeWidth="2" :size="20" @click="(e) => addCartHandler(product, e)" />
-          <Heart :strokeWidth="2" :size="20" />
+          <template v-if="wishlist.isWishlist(product.id)">
+            <RouterLink to="/wishlist">
+              <Check :strokeWidth="2" :size="20" />
+            </RouterLink>
+          </template>
+          <template v-else>
+            <Heart :strokeWidth="2" :size="20" @click="(e) => addWishlistHandler(product, e)" />
+          </template>
           <Search :strokeWidth="2" :size="20" />
         </div>
       </div>
@@ -30,11 +37,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { CloudCog, Heart, Search, ShoppingCart } from 'lucide-vue-next'
+import { Check, CloudCog, Heart, Search, ShoppingCart } from 'lucide-vue-next'
 import type { Product } from '@/types'
 import { RouterLink } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import { useUIStore } from '@/stores/uiStore'
+import { useWishlistStore } from '@/stores/wishlistStore'
 
 defineProps<{
   product: Product
@@ -42,6 +50,7 @@ defineProps<{
 
 const cart = useCartStore()
 const ui = useUIStore()
+const wishlist = useWishlistStore()
 
 const isHovering = ref<Record<number, boolean>>({})
 const width = ref(window.innerWidth)
@@ -54,6 +63,12 @@ const addCartHandler = (product: Product, e: MouseEvent) => {
 
   cart.addItem(product)
   ui.toggleCart()
+}
+const addWishlistHandler = (product: Product, e: MouseEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+
+  wishlist.addItem(product)
 }
 
 const updateWidth = () => {

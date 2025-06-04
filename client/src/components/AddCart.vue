@@ -58,7 +58,9 @@
           <p>Subtotal:</p>
           <span>${{ cart.totalPrice }}</span>
         </div>
-        <button class="outline">View Cart</button>
+        <RouterLink to="/cart"
+          ><button class="outline" @click="ui.toggleCart">View Cart</button></RouterLink
+        >
         <button>Checkout</button>
       </div>
     </div>
@@ -77,11 +79,13 @@
 import { ShoppingCart, XCircle } from 'lucide-vue-next'
 import { ref, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
+import { useUIStore } from '@/stores/uiStore'
 
 defineProps({ open: Boolean })
 const emit = defineEmits(['toggle'])
 
 const cart = useCartStore()
+const ui = useUIStore()
 
 const hovering = ref(false)
 const scrollContent = ref<HTMLElement | null>(null)
@@ -122,7 +126,7 @@ onMounted(() => {
   width: 100%;
   height: 100vh;
   background-color: var(--background);
-  z-index: 2;
+  z-index: 3;
   padding: 1em 0.4em 1em 1em;
   transition: right 500ms ease-in-out;
 }

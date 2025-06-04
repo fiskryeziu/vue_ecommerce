@@ -18,13 +18,13 @@
             <User :strokeWidth="1" @click="ui.toggleLoginModal" />
           </div>
           <!-- NOTE: the data count attr static for now. -->
-          <div class="icon" data-count="2">
+          <div class="icon" :data-count="wishlist.count">
             <RouterLink to="/wishlist">
               <Heart :strokeWidth="1" />
             </RouterLink>
           </div>
           <div class="icon" :data-count="cart.itemCount">
-            <ShoppingCart :strokeWidth="1" @click="ui.toggleCart" />
+            <ShoppingCart :strokeWidth="1" @click="openCart" />
           </div>
         </div>
       </div>
@@ -45,17 +45,29 @@
 <script setup lang="ts">
 import { Heart, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
 import { ref, onMounted, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
 import LoginModal from './LoginModal.vue'
 import AddCart from './AddCart.vue'
 import { useUserStore } from '@/stores/userStore'
 import { useUIStore } from '@/stores/uiStore'
 import { useCartStore } from '@/stores/cartStore'
+import { useWishlistStore } from '@/stores/wishlistStore'
 
 const user = useUserStore()
 const ui = useUIStore()
 const cart = useCartStore()
+const wishlist = useWishlistStore()
+
+const route = useRoute()
+const router = useRouter()
+
+const openCart = () => {
+  if (route.name === 'cart') {
+    return router.push('/cart')
+  }
+  ui.toggleCart()
+}
 
 const showLoginIcon = computed(() => !user.isAuthed)
 

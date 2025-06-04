@@ -10,23 +10,20 @@
           <th></th>
           <th>Product name</th>
           <th>Unit price</th>
-          <th>Stock status</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-if="length > 0">
+        <tr v-if="wishlist.items.length > 0" v-for="item in wishlist.items" :key="item.id">
           <!-- TODO: remove from wishlist -->
-          <td><XCircle /></td>
-          <td><img src="/products/earrings.jpg" alt="" /></td>
+          <td><XCircle @click="wishlist.removeItem(item.id)" /></td>
+          <td><img :src="item.image" alt="" /></td>
           <td class="wishlist__title">
-            <RouterLink to="/product/1">Blue Stripes & Stone Earrings</RouterLink>
+            <RouterLink :to="`product/${item.slug}`">{{ item.title }}</RouterLink>
           </td>
-          <td class="wishlist__price">$249.00</td>
-          <td>In Stock</td>
+          <td class="wishlist__price">${{ item.compareprice ?? item.price }}</td>
           <td class="wishlist__add-to-cart">
-            <!-- this will add to add to cart and toggle the add to cart sidebar -->
-            <button>Add to cart</button>
+            <button @click="addCartHandler(item)">Add to cart</button>
           </td>
         </tr>
         <tr v-else class="table__empty">
@@ -36,25 +33,20 @@
     </table>
     <!--  768-px -->
 
-    <section>
+    <section v-for="item in wishlist.items" :key="item.id">
       <div class="wishlist__img">
-        <img src="/products/earrings.jpg" alt="" />
+        <img :src="item.image" alt="" />
       </div>
       <div class="wishlist__info">
         <div>
-          <p>Circle of Light Heart Earrings</p>
-          <XCircle class="left" />
+          <p>{{ item.title }}</p>
+          <XCircle class="left" @click="wishlist.removeItem(item.id)" />
         </div>
         <div>
           <span>Price:</span>
-          <p class="wishlist__price left">$249</p>
+          <p class="wishlist__price left">${{ item.compareprice ?? item.price }}</p>
         </div>
-        <div>
-          <span>Stock:</span>
-          <p class="left">In Stock</p>
-        </div>
-        <!-- TODO: remove from wishlist -->
-        <button>Add to cart</button>
+        <button @click="addCartHandler(item)">Add to cart</button>
       </div>
     </section>
   </main>
@@ -62,6 +54,10 @@
 
 <script setup lang="ts">
 import Breadcrumb from '@/components/Breadcrumb.vue'
+import { useCartStore } from '@/stores/cartStore'
+import { useUIStore } from '@/stores/uiStore'
+import { useWishlistStore } from '@/stores/wishlistStore'
+import type { Product } from '@/types'
 import { XCircle } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
 
@@ -70,8 +66,15 @@ const links = [
   { label: 'Wishlist', link: '' },
 ]
 
-// mock wishlist product length
-const length = 1
+const wishlist = useWishlistStore()
+const cart = useCartStore()
+const ui = useUIStore()
+
+const addCartHandler = (product: Product) => {
+  cart.addItem(product)
+  wishlist.removeItem(product.id)
+  ui.toggleCart()
+}
 </script>
 
 <style scoped>
