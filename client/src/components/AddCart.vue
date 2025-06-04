@@ -22,16 +22,18 @@
               <p class="item__title">{{ item.title }}</p>
               <div class="quantity-wrapper">
                 <div class="quantity">
-                  <!-- TODO: since for now we'll use a hardcoded quantity in cartStore.
-                            we'll do a increament and decrement of quantity based on the id of product
-                    -->
-                  <button>−</button>
-                  <input type="number" :value="item.quantity" min="1" max="99" />
-                  <button>+</button>
+                  <button @click="cart.decreaseQty(item.id)">−</button>
+                  <input
+                    type="number"
+                    :value="item.quantity"
+                    min="1"
+                    max="99"
+                    @input="onQuantityChange($event, item.id)"
+                  />
+                  <button @click="cart.increaseQty(item.id)">+</button>
                 </div>
               </div>
               <div class="item__qty row gap">
-                <!--TODO: qty X price -->
                 <p>{{ item.quantity }}</p>
                 <p>x</p>
                 <span>${{ cart.totalPrice }}</span>
@@ -68,9 +70,7 @@
     <div class="addcart__empty" v-else>
       <ShoppingCart :size="100" />
       <p>Shopping cart is empty</p>
-      <RouterLink to="/shop" @click="emit('toggle')">
-        <button>Continue Shopping</button>
-      </RouterLink>
+      <button @click="ui.toggleCart">Continue Shopping</button>
     </div>
   </aside>
 </template>
@@ -80,6 +80,7 @@ import { ShoppingCart, XCircle } from 'lucide-vue-next'
 import { ref, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
 import { useUIStore } from '@/stores/uiStore'
+import { onQuantityChange } from '@/utils'
 
 defineProps({ open: Boolean })
 const emit = defineEmits(['toggle'])
