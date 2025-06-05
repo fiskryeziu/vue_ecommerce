@@ -20,7 +20,7 @@
           <template v-else>
             <Heart :strokeWidth="2" :size="20" @click="(e) => addWishlistHandler(product, e)" />
           </template>
-          <Search :strokeWidth="2" :size="20" />
+          <Search :strokeWidth="2" :size="20" @click="quickViewHandler(product, $event)" />
         </div>
       </div>
       <div class="card__info">
@@ -43,6 +43,7 @@ import { RouterLink } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import { useUIStore } from '@/stores/uiStore'
 import { useWishlistStore } from '@/stores/wishlistStore'
+import { useProductsStore } from '@/stores/productsStore'
 
 defineProps<{
   product: Product
@@ -51,6 +52,7 @@ defineProps<{
 const cart = useCartStore()
 const ui = useUIStore()
 const wishlist = useWishlistStore()
+const productStore = useProductsStore()
 
 const isHovering = ref<Record<number, boolean>>({})
 const width = ref(window.innerWidth)
@@ -69,6 +71,13 @@ const addWishlistHandler = (product: Product, e: MouseEvent) => {
   e.stopPropagation()
 
   wishlist.addItem(product)
+}
+
+const quickViewHandler = (product: Product, e: MouseEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+  productStore.getQuickViewProduct(product)
+  ui.openQuickView()
 }
 
 const updateWidth = () => {

@@ -9,6 +9,7 @@ export const useProductsStore = defineStore('products', () => {
     featured: [],
     'best-sellers': [],
   })
+  const quickViewProduct = ref<Product>()
   const route = useRoute()
 
   const fetchProductsByCollection = async (collection: Feature): Promise<void> => {
@@ -73,10 +74,16 @@ export const useProductsStore = defineStore('products', () => {
     }
   }
 
+  const getQuickViewProduct = (product: Product) => {
+    quickViewProduct.value = product
+  }
+
   return {
     productsByCollections,
+    quickViewProduct,
     fetchProductsByCollection,
     fetchProductsByCategory,
     getProducts,
+    getQuickViewProduct,
   }
 })

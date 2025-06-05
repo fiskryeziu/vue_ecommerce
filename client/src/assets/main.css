@@ -203,3 +203,8 @@ body {
   font-size: clamp(1.625rem, 5vw, 2.5rem);
   font-weight: var(--font-normal);
 }
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}

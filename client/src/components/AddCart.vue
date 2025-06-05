@@ -95,7 +95,6 @@ const sliderTop = ref(0)
 
 const isHovering = (value: boolean) => {
   hovering.value = value
-  console.log(hovering.value)
 }
 
 const handleScroll = () => {
@@ -325,6 +324,12 @@ p {
   background-color: var(--primary);
   padding-block: 0.7em;
   margin-block: 2em;
+  color: var(--background);
+}
+
+.addcart__empty button {
+  background-color: var(--primary);
+  padding: 0.7em 1em;
   color: var(--background);
 }
 </style>

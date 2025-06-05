@@ -40,6 +40,7 @@
   <MobileMenu :open="isOpen" @toggle="toggleMenu" />
   <LoginModal :open="ui.isOpenLoginModal" @toggle="ui.toggleLoginModal" />
   <AddCart :open="ui.isOpenCart" @toggle="ui.toggleCart" />
+  <QuickView :product="product.quickViewProduct" />
 </template>
 
 <script setup lang="ts">
@@ -53,11 +54,15 @@ import { useUserStore } from '@/stores/userStore'
 import { useUIStore } from '@/stores/uiStore'
 import { useCartStore } from '@/stores/cartStore'
 import { useWishlistStore } from '@/stores/wishlistStore'
+import QuickView from './QuickView.vue'
+import { useProductsStore } from '@/stores/productsStore'
+import type { Product } from '@/types'
 
 const user = useUserStore()
 const ui = useUIStore()
 const cart = useCartStore()
 const wishlist = useWishlistStore()
+const product = useProductsStore()
 
 const route = useRoute()
 const router = useRouter()

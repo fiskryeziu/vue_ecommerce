@@ -5,6 +5,7 @@ export const useUIStore = defineStore('ui', () => {
   const isOpen = ref(false)
   const isOpenLoginModal = ref(false)
   const isOpenCart = ref(false)
+  const isQuickViewOpen = ref(false)
 
   const toggleFilter = () => {
     isOpen.value = !isOpen.value
@@ -17,6 +18,22 @@ export const useUIStore = defineStore('ui', () => {
   const toggleCart = () => {
     isOpenCart.value = !isOpenCart.value
   }
+  const openQuickView = () => {
+    isQuickViewOpen.value = true
+  }
+  const closeQuickView = () => {
+    isQuickViewOpen.value = false
+  }
 
-  return { isOpen, isOpenLoginModal, isOpenCart, toggleFilter, toggleLoginModal, toggleCart }
+  return {
+    isOpen,
+    isOpenLoginModal,
+    isOpenCart,
+    isQuickViewOpen,
+    toggleFilter,
+    toggleLoginModal,
+    toggleCart,
+    openQuickView,
+    closeQuickView,
+  }
 })
