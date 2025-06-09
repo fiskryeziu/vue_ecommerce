@@ -137,7 +137,7 @@ main {
   width: 100%;
   height: 60vh;
   background-color: var(--background);
-  z-index: 3;
+  z-index: 4;
   transition: top 500ms ease-in;
   overflow: hidden;
 }
@@ -148,7 +148,7 @@ main {
   height: 100%;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 2;
+  z-index: 3;
 }
 
 .quickview-active {

@@ -11,7 +11,7 @@
         :class="{ 'shop-card__button--active': isHovering[product.id] || isMobileScreen }"
       >
         <Heart :strokeWidth="1" :size="30" />
-        <Search :strokeWidth="1" :size="30" />
+        <Search :strokeWidth="1" :size="30" @click="quickViewHandler(product, $event)" />
       </div>
     </div>
     <div class="shop-card__info">
@@ -31,6 +31,8 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Heart, Search } from 'lucide-vue-next'
 import type { Product } from '@/types'
+import { useProductsStore } from '@/stores/productsStore'
+import { useUIStore } from '@/stores/uiStore'
 
 defineProps<{
   product: Product
@@ -38,6 +40,15 @@ defineProps<{
 
 const isHovering = ref<Record<number, boolean>>({})
 const width = ref(window.innerWidth)
+const productStore = useProductsStore()
+const ui = useUIStore()
+
+const quickViewHandler = (product: Product, e: MouseEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+  productStore.getQuickViewProduct(product)
+  ui.openQuickView()
+}
 
 const isMobileScreen = computed(() => width.value < 768)
 

@@ -9,6 +9,7 @@ import WishlistView from '@/views/WishlistView.vue'
 import NotFound from '@/views/NotFound.vue'
 import MyAccountView from '@/components/MyAccountView.vue'
 import CartView from '@/views/CartView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
 
 const isAuthed = true
 
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/my-account',
       name: 'my account',
       component: MyAccountView,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutView,
     },
     {
       path: '/product/:slug',
