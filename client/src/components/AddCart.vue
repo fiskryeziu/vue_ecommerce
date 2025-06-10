@@ -63,7 +63,9 @@
         <RouterLink to="/cart"
           ><button class="outline" @click="ui.toggleCart">View Cart</button></RouterLink
         >
-        <button>Checkout</button>
+        <RouterLink to="/checkout">
+          <button @click="ui.toggleCart">Checkout</button>
+        </RouterLink>
       </div>
     </div>
 

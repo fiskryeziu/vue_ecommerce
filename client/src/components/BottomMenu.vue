@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom-nav" v-if="route.name !== 'product'">
+  <div class="bottom-nav" v-if="!['product', 'checkout'].includes(route.name as string)">
     <RouterLink to="/" class="col center">
       <Home style="color: var(--secondary)" />
       <p class="text-xs uppercase">Home</p>

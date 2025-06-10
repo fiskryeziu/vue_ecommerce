@@ -1,6 +1,6 @@
 <template>
   <Breadcrumb :items="links" />
-  <h1 class="heading">Cart</h1>
+  <h1 class="heading">Checkout</h1>
   <main>
     <section class="form-wrapper">
       <form @submit.prevent="submitForm">
@@ -75,7 +75,10 @@
         <p>Total</p>
         <p>${{ cart.totalPrice }}</p>
       </div>
-      <button class="orders__btn">Place Order</button>
+      <button class="orders__btn" v-if="user.isAuthed">Place Order</button>
+      <RouterLink to="/my-account" v-else>
+        <button class="orders__btn-disabled">Login to place order</button>
+      </RouterLink>
     </section>
   </main>
 </template>
@@ -83,7 +86,9 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cartStore'
 import Breadcrumb from '../components/Breadcrumb.vue'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 const form = reactive({
   firstName: '',
@@ -101,12 +106,22 @@ function submitForm() {
   console.log('Form data:', form)
 }
 const cart = useCartStore()
+const router = useRouter()
+const user = useUserStore()
 
 const links = [
   { label: 'Home', link: '/' },
   { label: 'Shop', link: '/shop' },
   { label: 'Cart', link: '' },
 ]
+
+watch(
+  () => cart.itemCount,
+  (newCount, oldCount) => {
+    if (newCount === 0) router.push('/cart')
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>
@@ -222,7 +237,8 @@ label span {
   font-weight: var(--font-medium);
 }
 
-.orders__btn {
+.orders__btn,
+.orders__btn-disabled {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,10 +247,20 @@ label span {
   margin-block: 1em;
   padding: 1em;
   font-weight: var(--font-medium);
+  width: 100%;
 }
+
 @media screen and (max-width: 1024px) {
   .item__img {
     display: none;
+  }
+
+  .orders__btn,
+  .orders__btn-disabled {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
   }
 }
 @media screen and (max-width: 768px) {

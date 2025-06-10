@@ -82,7 +82,9 @@
           <p>Total</p>
           <p class="cart__price">${{ cart.totalPrice }}</p>
         </div>
-        <button>Proceed to checkout</button>
+        <RouterLink to="/checkout">
+          <button>Proceed to checkout</button>
+        </RouterLink>
       </section>
     </div>
   </main>

@@ -12,6 +12,7 @@
       >
         <Heart :strokeWidth="1" :size="30" />
         <Search :strokeWidth="1" :size="30" @click="quickViewHandler(product, $event)" />
+        <ShoppingCart :strokeWidth="1" :size="30" @click="addCartHandler(product, $event)" />
       </div>
     </div>
     <div class="shop-card__info">
@@ -29,10 +30,11 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { Heart, Search } from 'lucide-vue-next'
+import { Heart, Search, ShoppingCart } from 'lucide-vue-next'
 import type { Product } from '@/types'
 import { useProductsStore } from '@/stores/productsStore'
 import { useUIStore } from '@/stores/uiStore'
+import { useCartStore } from '@/stores/cartStore'
 
 defineProps<{
   product: Product
@@ -42,12 +44,21 @@ const isHovering = ref<Record<number, boolean>>({})
 const width = ref(window.innerWidth)
 const productStore = useProductsStore()
 const ui = useUIStore()
+const cart = useCartStore()
 
 const quickViewHandler = (product: Product, e: MouseEvent) => {
   e.preventDefault()
   e.stopPropagation()
   productStore.getQuickViewProduct(product)
   ui.openQuickView()
+}
+
+const addCartHandler = (product: Product, e: MouseEvent) => {
+  e.preventDefault()
+  e.stopPropagation()
+
+  cart.addItem(product)
+  ui.toggleCart()
 }
 
 const isMobileScreen = computed(() => width.value < 768)
