@@ -343,11 +343,12 @@ const updateProfile = async () => {
   }
 }
 
-const handleLogout = () => {
+const handleLogout = async () => {
   if (confirm('Are you sure you want to logout?')) {
-    // Call logout from user store
-    // user.logout()
-    showMessage('success', 'Logged out successfully!')
+    const logout = await user.logOut()
+    if (logout) {
+      showMessage('success', 'Logged out successfully!')
+    }
   }
 }
 
@@ -355,19 +356,15 @@ const toggleLogins = () => {
   hasAccount.value = !hasAccount.value
 }
 
-// Lifecycle hooks
 onMounted(() => {
-  // Check if user is logged in
   user.isLoggedIn()
 
-  // Load hasAccount preference from localStorage
   const saved = localStorage.getItem('hasAccount')
   if (saved !== null) {
     hasAccount.value = saved === 'true'
   }
 })
 
-// Watch for changes to hasAccount and save to localStorage
 watch(hasAccount, (value) => {
   localStorage.setItem('hasAccount', value.toString())
 })

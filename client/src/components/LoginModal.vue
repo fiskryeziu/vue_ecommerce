@@ -46,7 +46,9 @@ const loginHandler = async () => {
     })
 
     if (res.ok) {
-      user.login
+      user.login()
+      username.value = ''
+      password.value = ''
       emit('toggle')
     }
   } catch (error) {

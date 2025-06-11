@@ -14,7 +14,20 @@ export const useUserStore = defineStore('userStore', () => {
     data.message === 'unauthorized' ? (isAuthed.value = false) : (isAuthed.value = true)
   }
 
-  const login = computed(() => (isAuthed.value = true))
+  const login = () => {
+    isAuthed.value = true
+  }
 
-  return { isLoggedIn, isAuthed, login }
+  const logOut = async () => {
+    const res = await fetch('http://localhost:3000/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+    if (res.ok) {
+      isAuthed.value = false
+      return true
+    }
+  }
+
+  return { isLoggedIn, isAuthed, login, logOut }
 })

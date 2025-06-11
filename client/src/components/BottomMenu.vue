@@ -36,11 +36,12 @@ const route = useRoute()
 const router = useRouter()
 
 const clickHandler = () => {
-  if (user.isAuthed) {
-    router.push('/my-account')
-  } else {
-    ui.toggleLoginModal
-  }
+  console.log(user.isAuthed)
+  // if (user.isAuthed) {
+  //   router.push('/my-account')
+  // } else {
+  //   ui.toggleLoginModal()
+  // }
 }
 </script>
 

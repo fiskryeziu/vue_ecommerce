@@ -17,6 +17,11 @@
           <div class="icon" v-if="showLoginIcon">
             <User :strokeWidth="1" @click="ui.toggleLoginModal" />
           </div>
+          <div class="icon" v-else>
+            <RouterLink to="/my-account">
+              <User :strokeWidth="2" />
+            </RouterLink>
+          </div>
           <!-- NOTE: the data count attr static for now. -->
           <div class="icon" :data-count="wishlist.count">
             <RouterLink to="/wishlist">
@@ -56,7 +61,6 @@ import { useCartStore } from '@/stores/cartStore'
 import { useWishlistStore } from '@/stores/wishlistStore'
 import QuickView from './QuickView.vue'
 import { useProductsStore } from '@/stores/productsStore'
-import type { Product } from '@/types'
 
 const user = useUserStore()
 const ui = useUIStore()

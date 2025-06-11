@@ -39,10 +39,8 @@ const loginHandler = async () => {
       }),
       credentials: 'include',
     })
-    console.log(res)
     if (res.ok) {
-      user.login
-      emit('toggle')
+      user.login()
     }
   } catch (error) {
     if (error instanceof Error) {
