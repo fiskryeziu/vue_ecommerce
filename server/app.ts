@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import routes from "./routes";
 import { errorHandler } from "./middleware/error.middleware";
+import { handleStripeWebhook } from "./controller/stripe.controller";
 
 const app = express();
 
@@ -14,6 +15,12 @@ app.use(
   }),
 );
 app.use(cookieParser());
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  handleStripeWebhook,
+);
 app.use(express.json());
 
 app.use("/api", routes);

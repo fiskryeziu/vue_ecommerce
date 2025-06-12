@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
-    const token = await loginUser(username, password);
+    const { token, user } = await loginUser(username, password);
     res.cookie("token", token, {
       httpOnly: false,
       // TODO: in prod to true
@@ -27,14 +27,17 @@ export const login = async (req: Request, res: Response) => {
       sameSite: "lax",
       maxAge: 3600000,
     });
-    res.status(200).json({ message: "Logged in successfully" });
+    res.status(200).json({ user, message: "Logged in successfully" });
   } catch (error) {
     res.status(401).json({ message: (error as Error).message });
   }
 };
 
 export const me = async (req: Request, res: Response) => {
-  res.json({ user: req.user, message: "authorized" });
+  res.json({
+    user: { username: req.user?.username, id: req.user?.id },
+    message: "authorized",
+  });
 };
 
 export const logout = async (_req: Request, res: Response) => {

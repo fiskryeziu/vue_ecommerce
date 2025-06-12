@@ -3,7 +3,7 @@
   <h1 class="heading">Checkout</h1>
   <main>
     <section class="form-wrapper">
-      <form @submit.prevent="submitForm">
+      <form @submit.prevent="paymentHandler" id="formId">
         <p class="checkout__subtitle">Billing Details</p>
         <div class="col">
           <label>First name <span>*</span></label>
@@ -27,7 +27,7 @@
 
         <div class="col">
           <label>Street address <span>*</span></label>
-          <input v-model="form.streetAddress" type="text" required />
+          <input v-model="form.shippingAddress" type="text" required />
         </div>
 
         <div class="col">
@@ -75,7 +75,7 @@
         <p>Total</p>
         <p>${{ cart.totalPrice }}</p>
       </div>
-      <button class="orders__btn" v-if="user.isAuthed">Place Order</button>
+      <button class="orders__btn" v-if="user.isAuthed" @click="paymentHandler">Place Order</button>
       <RouterLink to="/my-account" v-else>
         <button class="orders__btn-disabled">Login to place order</button>
       </RouterLink>
@@ -86,25 +86,21 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cartStore'
 import Breadcrumb from '../components/Breadcrumb.vue'
-import { reactive, watch } from 'vue'
+import { onMounted, reactive, ref, watch, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 
 const form = reactive({
   firstName: '',
   lastName: '',
-  companyName: '',
   country: '',
-  streetAddress: '',
+  shippingAddress: '',
   city: '',
   zipCode: '',
   phone: '',
   email: '',
 })
 
-function submitForm() {
-  console.log('Form data:', form)
-}
 const cart = useCartStore()
 const router = useRouter()
 const user = useUserStore()
@@ -122,6 +118,34 @@ watch(
   },
   { immediate: true },
 )
+
+const paymentHandler = async () => {
+  const formEl = document.querySelector('#formId') as HTMLFormElement | null
+  if (formEl && !formEl.checkValidity()) {
+    formEl.reportValidity()
+    return
+  }
+  const res = await fetch('http://localhost:3000/api/stripe/create-checkout-session', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      user_id: user.user.id,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      country: form.country,
+      shippingAddress: form.shippingAddress,
+      city: form.city,
+      zipCode: form.zipCode,
+      phone: form.phone,
+      email: form.email,
+      totalPrice: cart.totalPrice,
+      cart: cart.items,
+    }),
+  })
+
+  const data = await res.json()
+  window.location.href = data.url
+}
 </script>
 
 <style scoped>

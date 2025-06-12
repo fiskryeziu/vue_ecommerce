@@ -12,7 +12,8 @@
     "@types/cors": "^2.8.17",
     "@types/express": "4",
     "@types/jsonwebtoken": "^9.0.8",
-    "@types/pg": "^8.15.0"
+    "@types/pg": "^8.15.0",
+    "stripe": "^18.2.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

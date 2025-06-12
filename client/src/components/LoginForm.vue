@@ -39,8 +39,10 @@ const loginHandler = async () => {
       }),
       credentials: 'include',
     })
+    const data = await res.json()
     if (res.ok) {
       user.login()
+      user.saveUser(data.user)
     }
   } catch (error) {
     if (error instanceof Error) {

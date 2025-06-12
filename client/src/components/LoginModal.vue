@@ -44,11 +44,13 @@ const loginHandler = async () => {
       }),
       credentials: 'include',
     })
+    const data = await res.json()
 
     if (res.ok) {
       user.login()
       username.value = ''
       password.value = ''
+      user.saveUser(data.user)
       emit('toggle')
     }
   } catch (error) {
