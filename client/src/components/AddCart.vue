@@ -36,7 +36,7 @@
               <div class="item__qty row gap">
                 <p>{{ item.quantity }}</p>
                 <p>x</p>
-                <span>${{ cart.totalPrice }}</span>
+                <span>${{ (item.price * item.quantity).toFixed(2) }}</span>
               </div>
             </div>
             <div class="item__remove">

@@ -12,6 +12,7 @@
           <Star v-for="n in product.quickViewProduct.rating" fill="#222222" :size="14" />
         </div>
         <p class="product__price">${{ product.quickViewProduct.price }}</p>
+        <p class="product__compareprice">${{ product.quickViewProduct.compareprice }}</p>
         <p class="product__desc">{{ product.quickViewProduct.description }}</p>
         <p class="product__availability">
           Availability: <span style="color: green">In Stock</span>
@@ -195,6 +196,11 @@ main {
 }
 .product__price {
   font-size: 22px;
+}
+
+.product__compareprice {
+  color: var(--secondary);
+  text-decoration: line-through;
 }
 .product__desc {
   color: var(--secondary);

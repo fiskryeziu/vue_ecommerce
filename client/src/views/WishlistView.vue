@@ -21,7 +21,7 @@
           <td class="wishlist__title">
             <RouterLink :to="`product/${item.slug}`">{{ item.title }}</RouterLink>
           </td>
-          <td class="wishlist__price">${{ item.compareprice ?? item.price }}</td>
+          <td class="wishlist__price">${{ item.price }}</td>
           <td class="wishlist__add-to-cart">
             <button @click="addCartHandler(item)">Add to cart</button>
           </td>
@@ -44,7 +44,7 @@
         </div>
         <div>
           <span>Price:</span>
-          <p class="wishlist__price left">${{ item.compareprice ?? item.price }}</p>
+          <p class="wishlist__price left">${{ item.price }}</p>
         </div>
         <button @click="addCartHandler(item)">Add to cart</button>
       </div>

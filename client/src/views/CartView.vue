@@ -22,7 +22,7 @@
             <td class="cart__title">
               <RouterLink :to="`/product/${item.slug}`">{{ item.title }}</RouterLink>
             </td>
-            <td class="cart__price">${{ item.compareprice ?? item.price }}</td>
+            <td class="cart__price">${{ item.price }}</td>
             <td>
               <div class="quantity">
                 <!-- TODO: increment or decreate the quantity -->
@@ -72,7 +72,7 @@
           </div>
           <div>
             <span>Price:</span>
-            <p class="cart__price left">${{ item.compareprice ?? item.price }}</p>
+            <p class="cart__price left">${{ item.price }}</p>
           </div>
         </div>
       </section>

@@ -8,7 +8,7 @@ import {
   fetchProductsByCategory,
   fetchRelatedProducts,
 } from "../services/product.service";
-import type { Category } from "../types/user";
+import type { Category } from "../types/types";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {

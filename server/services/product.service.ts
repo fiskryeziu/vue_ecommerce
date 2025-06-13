@@ -7,7 +7,7 @@ import {
   queryProductsByCategory,
   queryRelatedProducts,
 } from "../db/product.queries";
-import type { Category } from "../types/user";
+import type { Category } from "../types/types";
 
 export const fetchProducts = async (filters: {
   category?: string;

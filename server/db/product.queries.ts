@@ -1,4 +1,4 @@
-import type { Category } from "../types/user";
+import type { Category } from "../types/types";
 import { pool } from "./db";
 
 export const queryProducts = async (filters: {

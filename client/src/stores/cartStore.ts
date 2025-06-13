@@ -10,10 +10,7 @@ export const useCartStore = defineStore(
 
     const itemCount = computed(() => items.value.reduce((acc, item) => acc + item.quantity, 0))
     const totalPrice = computed(() => {
-      const total = items.value.reduce(
-        (acc, item) => acc + item.quantity * (item.compareprice ?? item.price),
-        0,
-      )
+      const total = items.value.reduce((acc, item) => acc + item.quantity * item.price, 0)
       return total.toFixed(2)
     })
 

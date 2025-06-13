@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import Stripe from "stripe";
+import { queryCreateOrder } from "../db/orders.queries";
 
 const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 export const stripePayment = async (req: Request, res: Response) => {
@@ -32,8 +33,8 @@ export const stripePayment = async (req: Request, res: Response) => {
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
-      success_url: `http://localhost:5173/success`,
-      cancel_url: `http://localhost:5173/cancel`,
+      success_url: `http://localhost:5173/checkout`,
+      cancel_url: `http://localhost:5173/checkout`,
       metadata: {
         user_id,
         firstName,
@@ -43,6 +44,13 @@ export const stripePayment = async (req: Request, res: Response) => {
         country,
         city,
         zipCode,
+        items: JSON.stringify(
+          cart.map((item: any) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        ),
       },
     });
 
@@ -76,9 +84,33 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
   }
 
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    console.log("✅ Payment succeeded:", session);
-    // Save order to DB here
+    const session = event.data.object as Stripe.Checkout.Session;
+    const metadata = session.metadata;
+
+    try {
+      if (metadata) {
+        const items = JSON.parse(metadata.items);
+
+        await queryCreateOrder({
+          userId: metadata.user_id,
+          paymentIntentId: session.payment_intent as string,
+          firstName: metadata.firstName,
+          lastName: metadata.lastName,
+          phone: metadata.phone,
+          address: metadata.shippingAddress,
+          country: metadata.country,
+          city: metadata.city,
+          zipCode: metadata.zipCode,
+          totalPrice: parseFloat((session.amount_total! / 100).toFixed(2)),
+          status: "paid",
+          items,
+        });
+      }
+
+      console.log("✅ Order saved to DB");
+    } catch (dbError) {
+      console.error("❌ Failed to save order:", dbError);
+    }
   }
 
   res.status(200).json({ received: true });

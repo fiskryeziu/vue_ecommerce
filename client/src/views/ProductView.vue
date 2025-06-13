@@ -1,6 +1,5 @@
 <template>
   <Breadcrumb :items="links" v-if="!error" />
-  <!-- product img - product info -->
 
   <!-- TODO: leave as it is for the moment  -->
   <p v-if="isLoading">Loading product...</p>
@@ -28,6 +27,7 @@
         <Star v-for="n in product.rating" fill="#222222" :size="14" />
       </div>
       <p class="product__price">${{ product.price }}</p>
+      <p class="product__compareprice" v-if="product.compareprice">${{ product.compareprice }}</p>
       <p class="product__desc">{{ product.description }}</p>
       <p class="product__availability">Availability: <span style="color: green">In Stock</span></p>
       <div class="product__buy">
@@ -82,7 +82,7 @@
   <section class="sticky__cart" :class="{ 'sticky__cart-active': !isInView }">
     <div class="row">
       <div class="sticky__cart__img">
-        <img src="/products/earrings.jpg" alt="" />
+        <img :src="product?.image" alt="" />
       </div>
       <div class="col gap-1">
         <p style="">{{ product?.title }}</p>
@@ -90,7 +90,7 @@
           <Star v-for="n in product?.rating" fill="#222222" :size="14" />
         </div>
 
-        <p>$249.00</p>
+        <p>{{ product?.price }}</p>
       </div>
     </div>
 
@@ -223,6 +223,11 @@ onMounted(() => {
 }
 .product__price {
   font-size: 22px;
+}
+
+.product__compareprice {
+  color: var(--secondary);
+  text-decoration: line-through;
 }
 .product__desc {
   color: var(--secondary);
