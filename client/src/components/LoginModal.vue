@@ -67,7 +67,7 @@ const loginHandler = async () => {
 .login__modal {
   position: fixed;
   left: 50%;
-  top: -100%;
+  top: -1000%;
   transform: translateX(-50%);
   max-width: 500px;
   width: 100%;

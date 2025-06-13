@@ -65,6 +65,7 @@
               <div class="filter-container">
                 <select v-model="orderFilter" class="filter-select">
                   <option value="all">All Orders</option>
+                  <option value="paid">Paid</option>
                   <option value="pending">Pending</option>
                   <option value="shipped">Shipped</option>
                   <option value="delivered">Delivered</option>
@@ -75,17 +76,17 @@
 
             <!-- Orders List -->
             <div class="orders-list">
-              <div v-for="order in filteredOrders" :key="order.id" class="order-card">
+              <div v-for="order in filteredOrders" :key="order.order_id" class="order-card">
                 <div class="order-header">
                   <div class="order-info">
-                    <h3 class="order-id">Order #{{ order.id }}</h3>
+                    <h3 class="order-id">Order #{{ order.order_id }}</h3>
                     <p class="order-date">{{ formatDate(order.date) }}</p>
                   </div>
                   <div class="order-meta">
                     <span :class="['status-badge', `status-${order.status}`]">
                       {{ order.status.charAt(0).toUpperCase() + order.status.slice(1) }}
                     </span>
-                    <span class="order-total">${{ order.total.toFixed(2) }}</span>
+                    <span class="order-total">${{ order.total }}</span>
                   </div>
                 </div>
 
@@ -93,10 +94,10 @@
                   <div class="items-grid">
                     <div v-for="item in order.items" :key="item.id" class="item-row">
                       <div class="item-icon">
-                        <Package class="package-icon" />
+                        <img :src="item.image" />
                       </div>
                       <div class="item-details">
-                        <p class="item-name">{{ item.name }}</p>
+                        <p class="item-name">{{ item.title }}</p>
                         <p class="item-quantity">Qty: {{ item.quantity }}</p>
                       </div>
                     </div>
@@ -107,7 +108,7 @@
                   <div class="shipping-info">
                     <span class="shipping-address">
                       <Truck class="truck-icon" />
-                      {{ order.shippingAddress }}
+                      {{ order.shipping_address }}
                     </span>
                   </div>
                 </div>
@@ -206,7 +207,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import {
-  Menu,
   ShoppingBag,
   User,
   LogOut,
@@ -219,6 +219,9 @@ import Breadcrumb from './Breadcrumb.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
 import { useUserStore } from '@/stores/userStore'
+import { useProductsStore } from '@/stores/productsStore'
+import type { Ref } from 'vue'
+import type { Order } from '@/types'
 
 const links = [
   { label: 'Home', link: '/' },
@@ -226,6 +229,7 @@ const links = [
 ]
 
 const user = useUserStore()
+const product = useProductsStore()
 
 // Authentication state
 const hasAccount = ref(true)
@@ -255,39 +259,7 @@ const passwordForm = ref({
   confirm: '',
 })
 
-// dummy data
-const orders = ref([
-  {
-    id: '12345',
-    date: '2024-01-15',
-    status: 'delivered',
-    total: 129.99,
-    shippingAddress: '123 Main St, Anytown, ST 12345',
-    items: [
-      { id: 1, name: 'Wireless Headphones', quantity: 1 },
-      { id: 2, name: 'Phone Case', quantity: 2 },
-    ],
-  },
-  {
-    id: '12346',
-    date: '2024-01-20',
-    status: 'shipped',
-    total: 89.5,
-    shippingAddress: '123 Main St, Anytown, ST 12345',
-    items: [{ id: 3, name: 'Bluetooth Speaker', quantity: 1 }],
-  },
-  {
-    id: '12347',
-    date: '2024-01-25',
-    status: 'pending',
-    total: 199.99,
-    shippingAddress: '123 Main St, Anytown, ST 12345',
-    items: [
-      { id: 4, name: 'Smart Watch', quantity: 1 },
-      { id: 5, name: 'Charging Cable', quantity: 1 },
-    ],
-  },
-])
+const orders: Ref<Order[]> = ref([])
 
 const filteredOrders = computed(() => {
   if (orderFilter.value === 'all') {
@@ -356,8 +328,14 @@ const toggleLogins = () => {
   hasAccount.value = !hasAccount.value
 }
 
-onMounted(() => {
-  user.isLoggedIn()
+onMounted(async () => {
+  await user.isLoggedIn()
+
+  console.log('calling fetch orders')
+  const orderData = await product.fetchOrders()
+  console.log(orderData)
+
+  orders.value = orderData
 
   const saved = localStorage.getItem('hasAccount')
   if (saved !== null) {
@@ -672,6 +650,10 @@ watch(hasAccount, (value) => {
   background-color: #d1fae5;
   color: #065f46;
 }
+.status-paid {
+  background-color: #dcfce7;
+  color: #15803d;
+}
 
 .status-cancelled {
   background-color: #fee2e2;
@@ -716,17 +698,11 @@ watch(hasAccount, (value) => {
 .item-icon {
   width: 3rem;
   height: 3rem;
-  background-color: #e5e7eb;
   border-radius: 0.375rem;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.package-icon {
-  height: 1.5rem;
-  width: 1.5rem;
-  color: #9ca3af;
+  overflow: hiden;
 }
 
 .item-details {

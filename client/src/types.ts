@@ -19,3 +19,19 @@ export type TProducts = {
   products: Product[]
   totalPages: number
 }
+
+export type OrderItem = {
+  id: number
+  title: string
+  image: string
+  quantity: number
+}
+
+export type Order = {
+  order_id: number
+  date: string
+  status: string
+  total: string
+  shipping_address: string
+  items: OrderItem[]
+}

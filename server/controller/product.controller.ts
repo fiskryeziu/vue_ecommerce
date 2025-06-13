@@ -9,6 +9,7 @@ import {
   fetchRelatedProducts,
 } from "../services/product.service";
 import type { Category } from "../types/types";
+import { queryOrdersByUserId } from "../db/orders.queries";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -96,5 +97,20 @@ export const getRelatedProducts = async (req: Request, res: Response) => {
     res
       .status(500)
       .json({ message: "Failed to get the product related products" });
+  }
+};
+export const getOrdersByUserId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+    const orders = await queryOrdersByUserId(userId);
+    if (!orders) {
+      return res.status(404).json({ message: "Orders not found" });
+    }
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Failed to fetch orders:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

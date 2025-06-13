@@ -78,6 +78,24 @@ export const useProductsStore = defineStore('products', () => {
     quickViewProduct.value = product
   }
 
+  const fetchOrders = async () => {
+    const res = await fetch('http://localhost:3000/api/products/orders', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    console.log(res)
+    if (!res.ok) {
+      throw new Error('Failed to fetch orders')
+    }
+
+    const data = await res.json()
+    console.log(data)
+    return data
+  }
+
   return {
     productsByCollections,
     quickViewProduct,
@@ -85,5 +103,6 @@ export const useProductsStore = defineStore('products', () => {
     fetchProductsByCategory,
     getProducts,
     getQuickViewProduct,
+    fetchOrders,
   }
 })
