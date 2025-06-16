@@ -1,8 +1,8 @@
 <template>
   <Breadcrumb :items="links" class="breadcrumb-nav" />
 
-  <template v-if="user.isAuthed"
-    ><div class="main-wrapper">
+  <template v-if="user.isAuthed">
+    <div class="main-wrapper">
       <div class="tab-navigation">
         <button
           @click="activeTab = 'orders'"
@@ -126,16 +126,16 @@
             <h2 class="section-title">Profile Settings</h2>
 
             <div class="profile-card">
-              <form @submit.prevent="updateProfile" class="profile-form">
+              <form @submit.prevent="updateHandler" class="profile-form">
                 <div class="form-grid">
                   <div class="form-group">
                     <label class="form-label">First Name</label>
-                    <input v-model="profile.firstName" type="text" class="form-input" required />
+                    <input v-model="profile.first_name" type="text" class="form-input" required />
                   </div>
 
                   <div class="form-group">
                     <label class="form-label">Last Name</label>
-                    <input v-model="profile.lastName" type="text" class="form-input" required />
+                    <input v-model="profile.last_name" type="text" class="form-input" required />
                   </div>
                 </div>
 
@@ -151,7 +151,7 @@
 
                 <div class="form-group">
                   <label class="form-label">Address</label>
-                  <textarea v-model="profile.address" rows="3" class="form-textarea"></textarea>
+                  <textarea v-model="profile.street" rows="3" class="form-textarea"></textarea>
                 </div>
 
                 <div class="password-section">
@@ -187,34 +187,26 @@
           </div>
         </div>
       </div>
-    </div></template
-  >
+    </div>
+  </template>
 
   <template v-else>
     <LoginForm v-if="hasAccount" @toggle="toggleLogins" />
     <RegisterForm v-else @toggle="toggleLogins" />
   </template>
 
-  <div v-if="message.show" :class="['toast', `toast-${message.type}`]">
+  <div v-if="ui.message.show" :class="['toast', `toast-${ui.message.type}`]">
     <div class="toast-content">
-      <CheckCircle v-if="message.type === 'success'" class="toast-icon" />
+      <CheckCircle v-if="ui.message.type === 'success'" class="toast-icon" />
       <AlertCircle v-else class="toast-icon" />
-      {{ message.text }}
+      {{ ui.message.text }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import {
-  ShoppingBag,
-  User,
-  LogOut,
-  Package,
-  Truck,
-  CheckCircle,
-  AlertCircle,
-} from 'lucide-vue-next'
+import { ShoppingBag, User, LogOut, Truck, CheckCircle, AlertCircle } from 'lucide-vue-next'
 import Breadcrumb from './Breadcrumb.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
@@ -222,6 +214,8 @@ import { useUserStore } from '@/stores/userStore'
 import { useProductsStore } from '@/stores/productsStore'
 import type { Ref } from 'vue'
 import type { Order } from '@/types'
+import { useUIStore } from '@/stores/uiStore'
+import { storeToRefs } from 'pinia'
 
 const links = [
   { label: 'Home', link: '/' },
@@ -229,7 +223,9 @@ const links = [
 ]
 
 const user = useUserStore()
+const { profile } = storeToRefs(user) // make it reactive
 const product = useProductsStore()
+const ui = useUIStore()
 
 // Authentication state
 const hasAccount = ref(true)
@@ -238,20 +234,6 @@ const hasAccount = ref(true)
 const activeTab = ref('orders')
 const orderFilter = ref('all')
 const isUpdating = ref(false)
-
-const message = ref({
-  show: false,
-  type: 'success',
-  text: '',
-})
-
-const profile = ref({
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'john.doe@example.com',
-  phone: '+1 (555) 123-4567',
-  address: '123 Main St, Anytown, ST 12345',
-})
 
 const passwordForm = ref({
   current: '',
@@ -273,20 +255,10 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString(undefined, options)
 }
 
-const showMessage = (type: string, text: string) => {
-  message.value = { show: true, type, text }
-  setTimeout(() => {
-    message.value.show = false
-  }, 3000)
-}
-
-const updateProfile = async () => {
+const updateHandler = async () => {
   isUpdating.value = true
 
   try {
-    // simulate
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
     if (passwordForm.value.current || passwordForm.value.new || passwordForm.value.confirm) {
       if (!passwordForm.value.current) {
         throw new Error('Current password is required')
@@ -294,12 +266,10 @@ const updateProfile = async () => {
       if (passwordForm.value.new !== passwordForm.value.confirm) {
         throw new Error('New passwords do not match')
       }
-      if (passwordForm.value.new.length < 6) {
-        throw new Error('New password must be at least 6 characters')
-      }
     }
 
-    showMessage('success', 'Profile updated successfully!')
+    await user.updateProfile(passwordForm.value)
+    ui.showMessage('success', 'Profile updated successfully!')
 
     passwordForm.value = {
       current: '',
@@ -307,9 +277,9 @@ const updateProfile = async () => {
       confirm: '',
     }
   } catch (error) {
-    if (error instanceof Error) {
-      showMessage('error', error.message)
-    }
+    console.log('qysh asht errori',error)
+    const message = error instanceof Error ? error.message : 'An unexpected error occurred.'
+    ui.showMessage('error', message)
   } finally {
     isUpdating.value = false
   }
@@ -319,7 +289,7 @@ const handleLogout = async () => {
   if (confirm('Are you sure you want to logout?')) {
     const logout = await user.logOut()
     if (logout) {
-      showMessage('success', 'Logged out successfully!')
+      ui.showMessage('success', 'Logged out successfully!')
     }
   }
 }
@@ -330,10 +300,9 @@ const toggleLogins = () => {
 
 onMounted(async () => {
   await user.isLoggedIn()
+  await user.getProfile()
 
-  console.log('calling fetch orders')
   const orderData = await product.fetchOrders()
-  console.log(orderData)
 
   orders.value = orderData
 
@@ -650,6 +619,7 @@ watch(hasAccount, (value) => {
   background-color: #d1fae5;
   color: #065f46;
 }
+
 .status-paid {
   background-color: #dcfce7;
   color: #15803d;
@@ -902,40 +872,5 @@ watch(hasAccount, (value) => {
 
 .btn-secondary:hover {
   background-color: #f9fafb;
-}
-
-/* Toast messages */
-.toast {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 50;
-  padding: 1rem;
-  border-radius: 0.375rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.toast-success {
-  background-color: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-}
-
-.toast-error {
-  background-color: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
-}
-
-.toast-content {
-  display: flex;
-  align-items: center;
-}
-
-.toast-icon {
-  height: 1.25rem;
-  width: 1.25rem;
-  margin-right: 0.5rem;
 }
 </style>

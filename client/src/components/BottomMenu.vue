@@ -57,6 +57,7 @@ const clickHandler = () => {
 .bottom-nav__filter {
   display: none;
 }
+
 @media screen and (max-width: 1024px) {
   .bottom-nav {
     display: flex;
@@ -64,6 +65,7 @@ const clickHandler = () => {
     width: 100%;
   }
 }
+
 @media screen and (max-width: 768px) {
   .bottom-nav__filter {
     display: block;

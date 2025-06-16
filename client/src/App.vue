@@ -12,10 +12,12 @@ TODO:
 - [x] related product carousel in single product page fetch from db
 - [x] server/client for product filter + pagination
 - [x] add to cart, wishlist store with pinia, rm hardcoded data
-- [x] quick view modal, when clicking the search icon in product cart
-- []  add dashboard for clients to see the profile info & orders
-- [] payment gateway with stripe
+- [x] qusick view modal, when clicking the search icon in product cart
+- [x]  add dashboard for clients to see the profile info & orders
+- [x] payment gateway with stripe
+- [] add search functionality
 -->
+
 
 <template>
   <Navbar />

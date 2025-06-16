@@ -35,3 +35,17 @@ export type Order = {
   shipping_address: string
   items: OrderItem[]
 }
+export type ProfileUser = {
+  id?: string
+  username?: string
+  email: string
+  first_name: string
+  last_name: string
+  phone: string
+  street: string
+}
+
+export type TProfile = {
+  user: ProfileUser
+  message: 'authorized' | 'unauthorized'
+}
