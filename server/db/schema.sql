@@ -25,8 +25,15 @@ CREATE TABLE products (
     image VARCHAR(255),
     category VARCHAR(100),
     rating DECIMAL(3, 2),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    -- Full-text search column
+    ts tsvector GENERATED ALWAYS AS (
+        to_tsvector('english', coalesce(title, ''))
+    ) STORED
 );
+
+-- needed for search purposes
+CREATE INDEX ts_idx ON products USING GIN (ts);
 
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,

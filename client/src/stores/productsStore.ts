@@ -1,4 +1,4 @@
-import type { Category, Feature, Product, TProducts } from '@/types'
+import type { Category, Feature, Product, TProducts, TSearchProducts } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -11,6 +11,39 @@ export const useProductsStore = defineStore('products', () => {
   })
   const quickViewProduct = ref<Product>()
   const route = useRoute()
+
+  const searchQuery = ref('')
+  const searchResults: Ref<TSearchProducts[]> = ref([])
+  const isSearching = ref(false)
+
+  let debounceTimeout: ReturnType<typeof setTimeout> | null = null
+
+  const updateSearchQuery = (newQuery: string) => {
+    searchQuery.value = newQuery
+
+    if (debounceTimeout) clearTimeout(debounceTimeout)
+
+    if (!newQuery) {
+      searchResults.value = []
+      return
+    }
+
+    debounceTimeout = setTimeout(async () => {
+      isSearching.value = true
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/products/search?q=${encodeURIComponent(newQuery)}`,
+        )
+        const data = await res.json()
+        searchResults.value = data
+      } catch (err) {
+        console.error('Search failed:', err)
+        searchResults.value = []
+      } finally {
+        isSearching.value = false
+      }
+    }, 300)
+  }
 
   const fetchProductsByCollection = async (collection: Feature): Promise<void> => {
     if (productsByCollections.value[collection].length > 0) return
@@ -103,5 +136,9 @@ export const useProductsStore = defineStore('products', () => {
     getProducts,
     getQuickViewProduct,
     fetchOrders,
+    searchQuery,
+    searchResults,
+    isSearching,
+    updateSearchQuery,
   }
 })

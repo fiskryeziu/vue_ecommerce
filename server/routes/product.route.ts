@@ -8,6 +8,7 @@ import {
   getProducts,
   getProductsByCategory,
   getRelatedProducts,
+  getSearchedProducts,
 } from "../controller/product.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
@@ -19,6 +20,8 @@ router.get("/categories", getProductsByCategory);
 router.get("/featured", getFeatured);
 router.get("/best-sellers", getBestSeller);
 router.get("/orders", authenticate, getOrdersByUserId);
+router.get("/search", getSearchedProducts);
+
 router.get("/:slug", getProduct);
 router.get("/related/:slug", getRelatedProducts);
 

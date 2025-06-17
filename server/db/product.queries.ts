@@ -162,3 +162,15 @@ LIMIT
   );
   return res.rows;
 };
+
+export const querySearchProduct = async (searchQuery: string) => {
+  const res = await pool.query(
+    `SELECT id, title, price, image, slug
+   FROM products
+   WHERE ts @@ plainto_tsquery('english', $1)
+   LIMIT 20`,
+    [searchQuery],
+  );
+
+  return res.rows;
+};

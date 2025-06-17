@@ -10,6 +10,7 @@ import {
 } from "../services/product.service";
 import type { Category } from "../types/types";
 import { queryOrdersByUserId } from "../db/orders.queries";
+import { querySearchProduct } from "../db/product.queries";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -112,5 +113,23 @@ export const getOrdersByUserId = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Failed to fetch orders:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+export const getSearchedProducts = async (req: Request, res: Response) => {
+  const searchQuery = req.query.q as string;
+
+  console.log(searchQuery);
+
+  if (!searchQuery || typeof searchQuery !== "string") {
+    return res.status(400).json({ message: "Missing or invalid search query" });
+  }
+
+  try {
+    const products = await querySearchProduct(searchQuery);
+
+    return res.status(200).json(products);
+  } catch (error) {
+    console.error("Search failed:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

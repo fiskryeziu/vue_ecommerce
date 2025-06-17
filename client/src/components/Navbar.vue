@@ -6,11 +6,39 @@
           <Menu @click="toggleMenu" />
         </div>
 
-        <form>
-          <input type="text" placeholder="Search products" />
-          <button class="center">
-            <Search strokeWidth="1.3" />
+        <form @submit.prevent="() => {}">
+          <input
+            type="text"
+            placeholder="Search products"
+            v-model="product.searchQuery"
+            @input="onInput"
+            autocomplete="off"
+          />
+          <button class="center" type="submit" aria-label="Search" :disabled="product.isSearching">
+            <template v-if="product.isSearching">
+              <Loader2 class="spinner" strokeWidth="1.3" />
+            </template>
+            <template v-else>
+              <Search strokeWidth="1.3" />
+            </template>
           </button>
+          <section class="search__products" v-if="product.searchResults">
+            <div v-for="product in product.searchResults" :key="product.id">
+              <div class="search__product">
+                <div class="row center gap-1">
+                  <div class="search__prouduct__img">
+                    <img :src="product.image" alt="" />
+                  </div>
+                  <p class="search__prouduct__title">
+                    {{ product.title }}
+                  </p>
+                </div>
+                <p class="search__prouduct__price">
+                  {{ product.price }}
+                </p>
+              </div>
+            </div>
+          </section>
         </form>
         <h1 class="uppercase text-light">Gold & Co</h1>
         <div class="icons">
@@ -49,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { Heart, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
+import { Heart, Loader2, Menu, Search, ShoppingCart, User } from 'lucide-vue-next'
 import { ref, onMounted, computed } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import MobileMenu from './MobileMenu.vue'
@@ -86,6 +114,12 @@ const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
 
+function onInput(event: Event) {
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+  product.updateSearchQuery(target.value)
+}
+
 onMounted(() => {
   user.isLoggedIn()
 })
@@ -104,10 +138,47 @@ onMounted(() => {
   max-width: 100%;
 }
 form {
+  position: relative;
   border: 1px solid var(--lightest);
   display: flex;
+  flex: 0 0 33%;
+  max-width: 33%;
 }
 
+.search__products {
+  position: absolute;
+  top: 40px;
+  z-index: 3;
+  background-color: var(--background);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 55vh;
+  overflow-x: hidden;
+  width: 100%;
+  z-index: 98;
+}
+
+.search__product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  padding: 0.3em;
+}
+
+.search__prouduct__img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.search__prouduct__title {
+  font-size: var(--text-sm);
+}
+.search__prouduct__price {
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+}
 form > input {
   padding-left: 1em;
   color: var(--text-primary);
@@ -188,6 +259,18 @@ form {
 
 .nav-lower__link:hover::before {
   width: 100%;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  transform-origin: center center;
+  display: inline-block;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 1024px) {

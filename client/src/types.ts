@@ -49,3 +49,11 @@ export type TProfile = {
   user: ProfileUser
   message: 'authorized' | 'unauthorized'
 }
+
+export type TSearchProducts = {
+  id: number
+  image: string
+  title: string
+  slug: string
+  price: string
+}
