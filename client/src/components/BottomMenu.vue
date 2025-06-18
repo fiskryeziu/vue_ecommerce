@@ -9,7 +9,7 @@
       <p class="text-xs uppercase">Filter</p>
     </div>
     <div class="col center">
-      <Search style="color: var(--secondary)" />
+      <Search style="color: var(--secondary)" @click="ui.toggleSearchModal" />
       <p class="text-xs uppercase">Search</p>
     </div>
     <RouterLink to="wishlist" class="col center">

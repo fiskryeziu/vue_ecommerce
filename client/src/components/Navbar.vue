@@ -12,6 +12,8 @@
             placeholder="Search products"
             v-model="product.searchQuery"
             @input="onInput"
+            @focus="onFocus"
+            @blur="onBlur"
             autocomplete="off"
           />
           <button class="center" type="submit" aria-label="Search" :disabled="product.isSearching">
@@ -22,7 +24,7 @@
               <Search strokeWidth="1.3" />
             </template>
           </button>
-          <section class="search__products" v-if="product.searchResults">
+          <section class="search__products" v-if="product.searchResults && isInputFocused">
             <div v-for="product in product.searchResults" :key="product.id">
               <div class="search__product">
                 <div class="row center gap-1">
@@ -74,6 +76,7 @@
   <LoginModal :open="ui.isOpenLoginModal" @toggle="ui.toggleLoginModal" />
   <AddCart :open="ui.isOpenCart" @toggle="ui.toggleCart" />
   <QuickView :product="product.quickViewProduct" />
+  <SearchModal />
 </template>
 
 <script setup lang="ts">
@@ -89,6 +92,7 @@ import { useCartStore } from '@/stores/cartStore'
 import { useWishlistStore } from '@/stores/wishlistStore'
 import QuickView from './QuickView.vue'
 import { useProductsStore } from '@/stores/productsStore'
+import SearchModal from './SearchModal.vue'
 
 const user = useUserStore()
 const ui = useUIStore()
@@ -110,6 +114,8 @@ const showLoginIcon = computed(() => !user.isAuthed)
 
 const isOpen = ref(false)
 
+const isInputFocused = ref(false)
+
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
@@ -118,6 +124,14 @@ function onInput(event: Event) {
   const target = event.target as HTMLInputElement | null
   if (!target) return
   product.updateSearchQuery(target.value)
+}
+
+const onFocus = () => {
+  isInputFocused.value = true
+}
+
+const onBlur = () => {
+  isInputFocused.value = false
 }
 
 onMounted(() => {
@@ -291,6 +305,10 @@ form {
   }
 
   .nav-lower {
+    display: none;
+  }
+
+  .search__products {
     display: none;
   }
 

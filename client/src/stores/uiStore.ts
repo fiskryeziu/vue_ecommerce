@@ -11,6 +11,11 @@ export const useUIStore = defineStore('ui', () => {
     type: '',
     text: '',
   })
+  const isOpenSearchModal = ref(false)
+
+  const toggleSearchModal = () => {
+    isOpenSearchModal.value = !isOpenSearchModal.value
+  }
 
   const showMessage = (type: string, text: string) => {
     message.value = { show: true, type, text }
@@ -42,6 +47,7 @@ export const useUIStore = defineStore('ui', () => {
     isOpenLoginModal,
     isOpenCart,
     isQuickViewOpen,
+    isOpenSearchModal,
     message,
     toggleFilter,
     toggleLoginModal,
@@ -49,5 +55,6 @@ export const useUIStore = defineStore('ui', () => {
     openQuickView,
     closeQuickView,
     showMessage,
+    toggleSearchModal,
   }
 })
