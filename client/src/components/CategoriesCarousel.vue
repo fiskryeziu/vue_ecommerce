@@ -24,12 +24,14 @@
       @mouseenter="isHovering[item.id] = true"
       @mouseleave="isHovering[item.id] = false"
     >
-      <div class="wrapper">
-        <img :src="item.src" alt="" />
-        <h4 class="uppercase text-medium" :class="{ active: isHovering[item.id] }">
-          {{ item.category }}
-        </h4>
-      </div>
+      <RouterLink :to="{ path: '/shop', query: { categories: item.href } }">
+        <div class="wrapper">
+          <img :src="item.src" alt="" />
+          <h4 class="uppercase text-medium" :class="{ active: isHovering[item.id] }">
+            {{ item.category }}
+          </h4>
+        </div>
+      </RouterLink>
     </swiper-slide>
   </swiper>
 </template>
@@ -42,32 +44,32 @@ const items = ref([
   {
     id: 1,
     src: './categories/1.jpg',
-    category: 'necklases',
-    href: '',
+    category: 'necklaces',
+    href: 'necklaces',
   },
   {
     id: 2,
     src: './categories/2.jpg',
     category: 'rings',
-    href: '',
+    href: 'rings',
   },
   {
     id: 3,
     src: './categories/3.jpg',
     category: 'bracelets',
-    href: '',
+    href: 'bracelets',
   },
   {
     id: 4,
     src: './categories/4.jpg',
     category: 'earrings',
-    href: '',
+    href: 'earrings',
   },
   {
     id: 5,
     src: './categories/5.jpg',
     category: 'charm & dangles',
-    href: '',
+    href: 'charms-dangles',
   },
 ])
 const isHovering = ref<Record<number, boolean>>({})

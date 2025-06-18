@@ -308,7 +308,9 @@ onMounted(async () => {
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: var(--primary-light, #f0f0f0);
+  background-color: var(--background);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .pagination button.active {

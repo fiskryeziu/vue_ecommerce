@@ -16,7 +16,7 @@ const isAuthed = true
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
-    if (to.name === 'product' || to.name === 'cart') {
+    if (to.name === 'product' || to.name === 'cart' || to.name === 'shop') {
       return { top: 0 }
     }
 
